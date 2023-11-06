@@ -47,4 +47,8 @@ public class Weather {
         return location;
     }
 
+    public void setTs(String ts) {
+        this.ts = ts;
+    }
+
 }
