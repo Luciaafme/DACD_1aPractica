@@ -41,7 +41,7 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
                 System.out.println(hour);
                 String date = String.valueOf(listItem.get("dt_txt"));
 
-                if (hour.equals("00:00:00")) {
+                if (hour.equals("12:00:00")) {
                     int humidity = listItem.getAsJsonObject("main").get("humidity").getAsInt();
                     double temp = listItem.getAsJsonObject("main").get("temp").getAsDouble();
                     double precipitation = listItem.get("pop").getAsDouble();
