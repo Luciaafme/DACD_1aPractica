@@ -24,32 +24,32 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
 
         this.apikey = apikey;
     }
-
+    public String getApiUrl(Location location){
+        return  "https://api.openweathermap.org/data/2.5/forecast?lat=" + location.getLatitud() + "&lon=" + location.getLongitud() + "&appid=" + apikey;
+    }
+    public JsonObject getJsonData(String apiUrl) throws IOException {
+        Document result = Jsoup.connect(apiUrl).ignoreContentType(true).get();
+        JsonParser parser = new JsonParser();
+        return parser.parse(result.text()).getAsJsonObject();
+    }
     @Override
     public List<Weather> getWeather(Location location) {
 
-        String apiUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=" + location.getLatitud() + "&lon=" + location.getLongitud() + "&appid=" + apikey;
-
         Weather weather = null;
-        List<Weather> weatherPrediction = new ArrayList<>();
+        String apiUrl = getApiUrl(location);
+        List<Weather> weatherList = new ArrayList<>();
 
         try {
-            Document document = Jsoup.connect(apiUrl).ignoreContentType(true).get();
-            String jsonData = document.text();
-            JsonParser parser = new JsonParser();
-            JsonObject jsonObject = parser.parse(jsonData).getAsJsonObject();
-
-            JsonArray list = jsonObject.getAsJsonArray("list");
+            JsonObject jsonResult = getJsonData(apiUrl);
+            JsonArray list = jsonResult.getAsJsonArray("list");
             for (int i = 0; i < list.size(); i++) {
                 JsonObject listItem = list.get(i).getAsJsonObject();
                 String hour = String.valueOf(listItem.get("dt_txt")).substring(12,20);
-                System.out.println(hour);
                 String date = listItem.get("dt_txt").getAsString();
 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime localDateTime = LocalDateTime.parse(date, formatter);
                 Instant instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant();
-
 
                 if (hour.equals("12:00:00")) {
                     int humidity = listItem.getAsJsonObject("main").get("humidity").getAsInt();
@@ -58,14 +58,13 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
                     int clouds = listItem.getAsJsonObject("clouds").get("all").getAsInt();
                     double windSpeed = listItem.getAsJsonObject("wind").get("speed").getAsDouble();
                     weather = new Weather(instant, humidity, windSpeed, temp, clouds, precipitation, location);
-                    weatherPrediction.add(weather);
+                    weatherList.add(weather);
                 }
-
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(weatherPrediction);
-        return weatherPrediction;
+        System.out.println(weatherList);
+        return weatherList;
     }
 }
