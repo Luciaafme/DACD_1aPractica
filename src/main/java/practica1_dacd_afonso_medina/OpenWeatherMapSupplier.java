@@ -8,6 +8,10 @@ import com.google.gson.JsonParser;
 import practica1_dacd_afonso_medina.model.Location;
 import practica1_dacd_afonso_medina.model.Weather;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,12 +38,18 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
             String jsonData = document.text();
             JsonParser parser = new JsonParser();
             JsonObject jsonObject = parser.parse(jsonData).getAsJsonObject();
+
             JsonArray list = jsonObject.getAsJsonArray("list");
             for (int i = 0; i < list.size(); i++) {
                 JsonObject listItem = list.get(i).getAsJsonObject();
                 String hour = String.valueOf(listItem.get("dt_txt")).substring(12,20);
                 System.out.println(hour);
-                String date = String.valueOf(listItem.get("dt_txt"));
+                String date = listItem.get("dt_txt").getAsString();
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime localDateTime = LocalDateTime.parse(date, formatter);
+                Instant instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant();
+
 
                 if (hour.equals("12:00:00")) {
                     int humidity = listItem.getAsJsonObject("main").get("humidity").getAsInt();
@@ -47,7 +57,7 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
                     double precipitation = listItem.get("pop").getAsDouble();
                     int clouds = listItem.getAsJsonObject("clouds").get("all").getAsInt();
                     double windSpeed = listItem.getAsJsonObject("wind").get("speed").getAsDouble();
-                    weather = new Weather(date, humidity, windSpeed, temp, clouds, precipitation, location);
+                    weather = new Weather(instant, humidity, windSpeed, temp, clouds, precipitation, location);
                     weatherPrediction.add(weather);
                 }
 

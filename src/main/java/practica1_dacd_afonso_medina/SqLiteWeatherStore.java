@@ -2,11 +2,15 @@ package practica1_dacd_afonso_medina;
 
 import practica1_dacd_afonso_medina.model.Weather;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 public class SqLiteWeatherStore implements WeatherStore {
     private String file;
@@ -49,10 +53,15 @@ public class SqLiteWeatherStore implements WeatherStore {
 
     public void insert(Weather weather) throws SQLException {
         String strsql_insert = null;
+        Instant dateInst = weather.getTs();
+        LocalDateTime localDateTime = dateInst.atZone(ZoneId.systemDefault()).toLocalDateTime();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = localDateTime.format(formatter);
+
         String tableIsland = "weather_" + weather.getLocation().getIsland();
         strsql_insert = "INSERT INTO " + tableIsland + "(Date, WindSpeed, Precipitation, Clouds, Temperature, Humidity)" +
-                " SELECT " + weather.getTs() + ", " + weather.getWindSpeed() + ", " + weather.getPrecipitation() + ", " + weather.getClouds() + ", " + weather.getTemperature() + ", " + weather.getHumidity() +
-                " WHERE NOT EXISTS (SELECT 1 FROM " + tableIsland + " WHERE Date = " + weather.getTs() + ")";
+                " SELECT '" + formattedDate + "', " + weather.getWindSpeed() + ", " + weather.getPrecipitation() + ", " + weather.getClouds() + ", " + weather.getTemperature() + ", " + weather.getHumidity() +
+                " WHERE NOT EXISTS (SELECT 1 FROM " + tableIsland + " WHERE Date = '" + formattedDate + "')";
         System.out.println(strsql_insert);
         statement.execute(strsql_insert);
 
@@ -60,14 +69,19 @@ public class SqLiteWeatherStore implements WeatherStore {
 
     private void update(Weather weather) throws SQLException {
         String tableIsland = "weather_" + weather.getLocation().getIsland();
+        Instant dateInst = weather.getTs();
+        LocalDateTime localDateTime = dateInst.atZone(ZoneId.systemDefault()).toLocalDateTime();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = localDateTime.format(formatter);
         String query = "UPDATE " + tableIsland +
-                " SET Date = " + weather.getTs() +
-                ", WindSpeed = " + weather.getWindSpeed() +
+                " SET Date = '" +  formattedDate +
+                "', WindSpeed = " + weather.getWindSpeed() +
                 ", Precipitation = " + weather.getPrecipitation() +
                 ", Clouds = " + weather.getClouds() +
                 ", Temperature = " + weather.getTemperature() +
-                ", Humidity = " + weather.getHumidity()+
-                " WHERE Date = " + weather.getTs();
+                ", Humidity = " + weather.getHumidity() +
+                " WHERE Date = '" +formattedDate + "'";
+        System.out.println(query);
         statement.executeUpdate(query);
         System.out.println("Updated");
     }

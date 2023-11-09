@@ -1,7 +1,9 @@
 package practica1_dacd_afonso_medina.model;
 
+import java.time.Instant;
+
 public class Weather {
-    private String ts;
+    private Instant ts;
     private int humidity;
     private double windSpeed;
     private double temperature;
@@ -9,7 +11,7 @@ public class Weather {
     private double precipitation;
     private Location location;
 
-    public Weather(String ts, int humidity, double windSpeed, double temperature, int clouds, double precipitation, Location location) {
+    public Weather(Instant ts, int humidity, double windSpeed, double temperature, int clouds, double precipitation, Location location) {
         this.ts = ts;
         this.humidity = humidity;
         this.windSpeed = windSpeed;
@@ -19,7 +21,7 @@ public class Weather {
         this.location = location;
     }
 
-    public String getTs() {
+    public Instant getTs() {
         return ts;
     }
 
