@@ -1,4 +1,4 @@
-package practica1_dacd_afonso_medina;
+package practica1_dacd_afonso_medina.control;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

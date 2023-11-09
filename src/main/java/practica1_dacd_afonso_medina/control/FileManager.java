@@ -1,4 +1,4 @@
-package practica1_dacd_afonso_medina;
+package practica1_dacd_afonso_medina.control;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

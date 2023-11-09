@@ -1,13 +1,6 @@
 package practica1_dacd_afonso_medina.control;
 
-import practica1_dacd_afonso_medina.FileManager;
-import practica1_dacd_afonso_medina.OpenWeatherMapSupplier;
-import practica1_dacd_afonso_medina.SqLiteWeatherStore;
-import practica1_dacd_afonso_medina.WeatherControler;
-import practica1_dacd_afonso_medina.model.Location;
-
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Timer;
 
 public class Main {

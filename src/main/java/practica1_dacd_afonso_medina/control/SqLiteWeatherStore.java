@@ -1,16 +1,13 @@
-package practica1_dacd_afonso_medina;
+package practica1_dacd_afonso_medina.control;
 
 import practica1_dacd_afonso_medina.model.Weather;
 
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
 
 public class SqLiteWeatherStore implements WeatherStore {
     private String file;
