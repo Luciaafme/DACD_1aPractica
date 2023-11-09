@@ -10,8 +10,7 @@ public class Main {
         String apikey = fileManager.readFile("C:\\Users\\lucia\\IdeaProjects\\DACD_1aPractica\\src\\main\\resources\\apiKey.txt");
 
         Timer timer = new Timer();
-        //long period = 6 * 60 * 60 * 1000; // 6 horas en milisegundos
-        long period =  5 * 60 * 1000; // 6 horas en milisegundos
+        long period = 6 * 60 * 60 * 1000;
 
         String path = "C:\\Users\\lucia\\IdeaProjects\\DACD_1aPractica\\src\\main\\resources\\path.txt";
         WeatherControler weatherControler = new WeatherControler(new OpenWeatherMapSupplier(apikey),new SqLiteWeatherStore(path));
