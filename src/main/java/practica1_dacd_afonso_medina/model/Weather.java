@@ -49,4 +49,16 @@ public class Weather {
         return location;
     }
 
+    @Override
+    public String toString() {
+        return "Weather{" +
+                "ts=" + ts +
+                ", humidity=" + humidity +
+                ", windSpeed=" + windSpeed +
+                ", temperature=" + temperature +
+                ", clouds=" + clouds +
+                ", precipitation=" + precipitation +
+                ", location=" + location +
+                '}';
+    }
 }

@@ -64,7 +64,6 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(weatherList);
         return weatherList;
     }
 }

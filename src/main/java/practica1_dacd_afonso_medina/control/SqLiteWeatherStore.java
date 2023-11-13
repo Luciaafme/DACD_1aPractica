@@ -15,15 +15,12 @@ public class SqLiteWeatherStore implements WeatherStore {
     private Statement statement;
 
     public SqLiteWeatherStore(String file) throws SQLException {
-        FileManager fileManager = new FileManager();
-        String pathDB = fileManager.readFile(file);
-        this.file = pathDB;
-        this.connection = connect(pathDB);
+        this.file = file;
+        this.connection = connect(file);
         this.statement = connection.createStatement();
     }
 
     private void createTableIsland(Weather weather) throws SQLException {
-        //for(String island: islands) {
             statement.execute("CREATE TABLE IF NOT EXISTS weather_" + weather.getLocation().getIsland() + "(" +
                     "Date TEXT,\n" +
                     "WindSpeed REAL,\n" +
@@ -32,7 +29,6 @@ public class SqLiteWeatherStore implements WeatherStore {
                     "Temperature REAL,\n" +
                     "Humidity INTEGER" +
                     ");");
-        //}
     }
 
     public static Connection connect(String dbPath) {
@@ -59,7 +55,7 @@ public class SqLiteWeatherStore implements WeatherStore {
         strsql_insert = "INSERT INTO " + tableIsland + "(Date, WindSpeed, Precipitation, Clouds, Temperature, Humidity)" +
                 " SELECT '" + formattedDate + "', " + weather.getWindSpeed() + ", " + weather.getPrecipitation() + ", " + weather.getClouds() + ", " + weather.getTemperature() + ", " + weather.getHumidity() +
                 " WHERE NOT EXISTS (SELECT 1 FROM " + tableIsland + " WHERE Date = '" + formattedDate + "')";
-        System.out.println(strsql_insert);
+        System.out.println("Inserted data: " + weather.toString());
         statement.execute(strsql_insert);
 
     }
@@ -78,7 +74,6 @@ public class SqLiteWeatherStore implements WeatherStore {
                 ", Temperature = " + weather.getTemperature() +
                 ", Humidity = " + weather.getHumidity() +
                 " WHERE Date = '" +formattedDate + "'";
-        System.out.println(query);
         statement.executeUpdate(query);
         System.out.println("Updated");
     }
