@@ -4,7 +4,7 @@ Lucía Afonso Medina
 
 University of Las Palmas de Gran Canaria
 
-2º year in Data science application development
+2nd year in Data science application development
 
 School of computer engineering
 
