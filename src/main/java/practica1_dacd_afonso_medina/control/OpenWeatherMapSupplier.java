@@ -8,7 +8,6 @@ import com.google.gson.JsonParser;
 import practica1_dacd_afonso_medina.model.Location;
 import practica1_dacd_afonso_medina.model.Weather;
 import practica1_dacd_afonso_medina.model.WeatherSupplier;
-
 import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;

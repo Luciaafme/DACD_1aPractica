@@ -2,7 +2,6 @@ package practica1_dacd_afonso_medina.control;
 
 import practica1_dacd_afonso_medina.model.Weather;
 import practica1_dacd_afonso_medina.model.WeatherStore;
-
 import java.sql.*;
 import java.time.Instant;
 import java.time.LocalDateTime;
