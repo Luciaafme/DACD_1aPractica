@@ -1,6 +1,7 @@
 package practica1_dacd_afonso_medina.control;
 
 import practica1_dacd_afonso_medina.model.Weather;
+import practica1_dacd_afonso_medina.model.WeatherStore;
 
 import java.sql.*;
 import java.time.Instant;
@@ -10,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class SqLiteWeatherStore implements WeatherStore {
-    private String file;
+    private final String file;
     private Connection connection;
     private Statement statement;
 
@@ -44,7 +45,7 @@ public class SqLiteWeatherStore implements WeatherStore {
         return conn;
     }
 
-    public void insert(Weather weather) throws SQLException {
+    private void insert(Weather weather) throws SQLException {
         String strsql_insert = null;
         Instant dateInst = weather.getTs();
         LocalDateTime localDateTime = dateInst.atZone(ZoneId.systemDefault()).toLocalDateTime();

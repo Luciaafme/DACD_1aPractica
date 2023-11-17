@@ -1,4 +1,4 @@
-package practica1_dacd_afonso_medina.control;
+package practica1_dacd_afonso_medina.model;
 
 import practica1_dacd_afonso_medina.model.Weather;
 
