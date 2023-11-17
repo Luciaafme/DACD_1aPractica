@@ -23,11 +23,12 @@ To make the program work you must enter the apikey and the name of the database 
 
 First step: 
 
-![img_2.png](img_2.png)
+<img width="492" alt="image" src="https://github.com/Luciaafme/DACD_1aPractica/assets/145342904/08257ec3-d914-41ca-b94d-a628151d321b">
 
 Second step:
 
-![img.png](img.png)
+<img width="529" alt="image" src="https://github.com/Luciaafme/DACD_1aPractica/assets/145342904/2de98c67-2eb1-4668-a47f-76a6f1890009">
+
 
 # Resources used
 The development environment used was IntelliJ IDEA, a widely used and highly integrated IDE. This IDE is connected to various tools and technologies to facilitate software development. One of the version control systems used was Git, which allows detailed tracking of changes in the source code. In addition, GitHub was used as a cloud hosting service to store the different Git repositories.
@@ -67,7 +68,11 @@ Finally, for documentation, Markdown, a plain text formatting syntax that facili
 # Design
 
 Class Diagram
-![img_3.png](img_3.png)
+
+<img width="582" alt="image" src="https://github.com/Luciaafme/DACD_1aPractica/assets/145342904/5b88e1ff-79e3-4ee1-baeb-161853c542e1">
+
+
+
 
 First of all, two POJO classes have been created, Weather and Location, in order to extract the information from the JSON provided by the API and set the values of each attribute of the variables. Both classes belong to the model layer, Weather stores information about the weather conditions and Location represents information about the geographic location. Also in the model layer we can see to interfaces WeatherSupplier and WeatherStore
 
