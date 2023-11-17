@@ -2,6 +2,8 @@ package practica1_dacd_afonso_medina.control;
 
 import practica1_dacd_afonso_medina.model.Weather;
 import practica1_dacd_afonso_medina.model.WeatherStore;
+
+import java.io.File;
 import java.sql.*;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -10,13 +12,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class SqLiteWeatherStore implements WeatherStore {
-    private final String file;
+    private final String dbpath;
     private Connection connection;
     private Statement statement;
 
-    public SqLiteWeatherStore(String file) throws SQLException {
-        this.file = file;
-        this.connection = connect(file);
+    public SqLiteWeatherStore(String dbpath) throws SQLException {
+        this.dbpath = dbpath;
+        new File(this.dbpath).getParentFile().mkdirs();
+        this.connection = connect(dbpath);
         this.statement = connection.createStatement();
     }
 
