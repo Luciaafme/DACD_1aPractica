@@ -14,7 +14,6 @@ public class Main {
         Timer timer = new Timer();
         long period = 6 * 60 * 60 * 1000;
 
-        String path = "C:\\Users\\lucia\\IdeaProjects\\DACD_1aPractica\\src\\main\\resources\\path.txt";
         WeatherControler weatherControler = new WeatherControler(new OpenWeatherMapSupplier(apikey),new SqLiteWeatherStore(args[1]));
         timer.schedule(weatherControler,0, period);
 

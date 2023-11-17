@@ -26,14 +26,17 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
 
         this.apikey = apikey;
     }
+
     public String getApiUrl(Location location){
         return  "https://api.openweathermap.org/data/2.5/forecast?lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&appid=" + apikey;
     }
+
     public JsonObject getJsonData(String apiUrl) throws IOException {
         Document result = Jsoup.connect(apiUrl).ignoreContentType(true).get();
         JsonParser parser = new JsonParser();
         return parser.parse(result.text()).getAsJsonObject();
     }
+
     @Override
     public List<Weather> getWeather(Location location) {
 
