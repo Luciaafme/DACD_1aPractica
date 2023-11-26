@@ -1,7 +1,6 @@
 package practica1_dacd_afonso_medina.control;
 
 import practica1_dacd_afonso_medina.model.Weather;
-import practica1_dacd_afonso_medina.model.WeatherStore;
 
 import java.io.File;
 import java.sql.*;

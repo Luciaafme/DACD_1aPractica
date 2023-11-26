@@ -7,7 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import practica1_dacd_afonso_medina.model.Location;
 import practica1_dacd_afonso_medina.model.Weather;
-import practica1_dacd_afonso_medina.model.WeatherSupplier;
+
 import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -27,7 +27,7 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
     }
 
     public String getApiUrl(Location location){
-        return  "https://api.openweathermap.org/data/2.5/forecast?lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&appid=" + apikey;
+        return  "https://api.openweathermap.org/data/2.5/forecast?lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&appid=" + apikey + "&units=metric";
     }
 
     public JsonObject getJsonData(String apiUrl) throws IOException {

@@ -1,4 +1,6 @@
-package practica1_dacd_afonso_medina.model;
+package practica1_dacd_afonso_medina.control;
+
+import practica1_dacd_afonso_medina.model.Weather;
 
 import java.sql.SQLException;
 import java.util.List;
