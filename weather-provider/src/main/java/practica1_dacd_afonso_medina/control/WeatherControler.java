@@ -1,16 +1,15 @@
 package practica1_dacd_afonso_medina.control;
 
+import practica1_dacd_afonso_medina.control.exception.StoreException;
 import practica1_dacd_afonso_medina.model.Location;
 import practica1_dacd_afonso_medina.model.Weather;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.List;
 import java.util.TimerTask;
 
 
 public class WeatherControler extends TimerTask {
     private OpenWeatherMapSupplier openWeatherMapSupplier;
-    private SqLiteWeatherStore sqLiteWeatherStore;
+    private JmsWeatherStore jmsWeatherStore;
     List<Location> listLocation = List.of(
             new Location(28.12380904158049, -15.436162953343267, "GranCanaria"),
             new Location(28.463850790803008, -16.25097353346818, "Tenerife"),
@@ -21,23 +20,23 @@ public class WeatherControler extends TimerTask {
             new Location(28.094369991798228, -17.109467831251514, "LaGomera"),
             new Location(28.684160726614596, -17.76582062032028, "LaPalma"));
 
-    public WeatherControler(OpenWeatherMapSupplier openWeatherMapSupplier, SqLiteWeatherStore sqLiteWeatherStore) {
+    public WeatherControler(OpenWeatherMapSupplier openWeatherMapSupplier, JmsWeatherStore jmsWeatherStore) {
         this.openWeatherMapSupplier = openWeatherMapSupplier;
-        this.sqLiteWeatherStore = sqLiteWeatherStore;
+        this.jmsWeatherStore = jmsWeatherStore;
     }
 
-    public void execute() throws SQLException, ParseException {
-        for (Location location : listLocation) {
-            List<Weather> weatherList = openWeatherMapSupplier.getWeather(location);
-            sqLiteWeatherStore.save(weatherList);
+    public void execute(){
+        try {
+            for (Location location : listLocation) {
+                List<Weather> weatherList = openWeatherMapSupplier.getWeather(location);
+                jmsWeatherStore.save(weatherList);
+            }
+        }catch (StoreException e){
+            throw new RuntimeException(e);
         }
     }
     @Override
     public void run() {
-        try {
-            execute();
-        } catch (SQLException | ParseException e) {
-            throw new RuntimeException(e);
-        }
+        execute();
     }
 }
