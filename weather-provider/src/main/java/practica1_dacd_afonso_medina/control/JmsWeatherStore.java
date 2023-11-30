@@ -10,8 +10,8 @@ import java.time.Instant;
 import java.util.List;
 
 public class JmsWeatherStore implements WeatherStore{
-    private static String brokerUrl = "tcp://localhost:61616";
-    private static String topicName = "prediction.Weather";
+    private static final String brokerUrl = "tcp://localhost:61616";
+    private static final String topicName = "prediction.Weather";
 
     @Override
     public void save(List<Weather> weatherPrediction) throws StoreException{
@@ -47,6 +47,5 @@ public class JmsWeatherStore implements WeatherStore{
         public JsonElement serialize(Instant src, Type typeOfSrc, JsonSerializationContext context) {
             return new JsonPrimitive(src.toString());
         }
-
     }
 }
