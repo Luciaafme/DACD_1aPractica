@@ -5,6 +5,6 @@ import practica1_dacd_afonso_medina.model.Weather;
 import java.util.List;
 
 public interface WeatherStore {
-    void save(List<Weather> weatherPrediction)  throws StoreException;
+    void save(List<Weather> weatherPrediction) throws StoreException;
 
 }

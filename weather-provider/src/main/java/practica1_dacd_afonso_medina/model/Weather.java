@@ -25,33 +25,6 @@ public class Weather {
         this.precipitation = precipitation;
         this.location = location;
     }
-    public String getSs() {
-        return ss;
-    }
-    public Instant getPredictionTime() {
-        return predictionTime;
-    }
-    public Instant getTs() {
-        return ts;
-    }
-    public int getHumidity() {
-        return humidity;
-    }
-    public double getWindSpeed() {
-        return windSpeed;
-    }
-    public double getTemperature() {
-        return temperature;
-    }
-    public int getClouds() {
-        return clouds;
-    }
-    public double getPrecipitation() {
-        return precipitation;
-    }
-    public Location getLocation() {
-        return location;
-    }
     @Override
     public String toString() {
         return "Weather{" +

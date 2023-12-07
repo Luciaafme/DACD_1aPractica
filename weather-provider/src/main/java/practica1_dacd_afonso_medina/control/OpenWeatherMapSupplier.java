@@ -26,7 +26,7 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
     }
 
     public String getApiUrl(Location location) {
-        return "https://api.openweathermap.org/data/2.5/forecast?lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&appid=" + apikey + "&units=metric";
+    return "https://api.openweathermap.org/data/2.5/forecast?lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&appid=" + apikey + "&units=metric";
     }
 
     public JsonObject getJsonData(String apiUrl) throws IOException {
@@ -35,32 +35,36 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
         return parser.parse(result.text()).getAsJsonObject();
     }
 
+    private Instant dateFormatter(String date){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime localDateTime = LocalDateTime.parse(date, formatter);
+        return localDateTime.atZone(ZoneId.systemDefault()).toInstant();
+    }
+
+    private Weather createWeatherObject(JsonObject listItem, Location location) {
+        String date = listItem.get("dt_txt").getAsString();
+        Instant predictionTime = dateFormatter(date);
+        int humidity = listItem.getAsJsonObject("main").get("humidity").getAsInt();
+        double temp = listItem.getAsJsonObject("main").get("temp").getAsDouble();
+        double precipitation = listItem.get("pop").getAsDouble();
+        int clouds = listItem.getAsJsonObject("clouds").get("all").getAsInt();
+        double windSpeed = listItem.getAsJsonObject("wind").get("speed").getAsDouble();
+        return new Weather(predictionTime, humidity, windSpeed, temp, clouds, precipitation, location);
+    }
+
     @Override
     public List<Weather> getWeather(Location location) {
-
-        Weather weather = null;
         String apiUrl = getApiUrl(location);
         List<Weather> weatherList = new ArrayList<>();
-
         try {
             JsonObject jsonResult = getJsonData(apiUrl);
             JsonArray list = jsonResult.getAsJsonArray("list");
             for (int i = 0; i < list.size(); i++) {
                 JsonObject listItem = list.get(i).getAsJsonObject();
                 String hour = String.valueOf(listItem.get("dt_txt")).substring(12, 20);
-                String date = listItem.get("dt_txt").getAsString();
-
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                LocalDateTime localDateTime = LocalDateTime.parse(date, formatter);
-                Instant predictionTime = localDateTime.atZone(ZoneId.systemDefault()).toInstant();
 
                 if (hour.equals("12:00:00")) {
-                    int humidity = listItem.getAsJsonObject("main").get("humidity").getAsInt();
-                    double temp = listItem.getAsJsonObject("main").get("temp").getAsDouble();
-                    double precipitation = listItem.get("pop").getAsDouble();
-                    int clouds = listItem.getAsJsonObject("clouds").get("all").getAsInt();
-                    double windSpeed = listItem.getAsJsonObject("wind").get("speed").getAsDouble();
-                    weather = new Weather(predictionTime, humidity, windSpeed, temp, clouds, precipitation, location);
+                    Weather weather = createWeatherObject(listItem, location);
                     weatherList.add(weather);
                 }
             }

@@ -32,7 +32,7 @@ public class WeatherControler extends TimerTask {
                 jmsWeatherStore.save(weatherList);
             }
         }catch (StoreException e){
-            throw new RuntimeException(e);
+            System.out.println("ERROR: " + e);
         }
     }
     @Override
