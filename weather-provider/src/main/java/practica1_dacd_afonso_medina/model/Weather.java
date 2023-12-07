@@ -25,19 +25,5 @@ public class Weather {
         this.precipitation = precipitation;
         this.location = location;
     }
-    @Override
-    public String toString() {
-        return "Weather{" +
-                "ts=" + ts +
-                ", ss='" + ss + '\'' +
-                ", predictionTime=" + predictionTime +
-                ", humidity=" + humidity +
-                ", windSpeed=" + windSpeed +
-                ", temperature=" + temperature +
-                ", clouds=" + clouds +
-                ", precipitation=" + precipitation +
-                ", location=" + location +
-                '}';
-    }
 }
 

@@ -18,26 +18,6 @@ public class FileEventBuilder implements EventStoreBuilder{
         this.baseDirectory = baseDirectory;
     }
 
-    @Override
-    public void save(String message) {
-        Gson gson = new Gson();
-        JsonObject event = gson.fromJson(message, JsonObject.class);
-        String ss = event.get("ss").getAsString();
-        String ts = event.get("ts").getAsString();
-        String formattedTs = dateFormatter(ts);
-        String directoryPath =  baseDirectory + "/eventstore/prediction.Weather/" + ss;
-        createDirectory(directoryPath);
-        String filepath = directoryPath + "/" + formattedTs + ".events";
-        writeToFile(filepath, message);
-
-    }
-    private String dateFormatter(String ts) {
-        Instant instant = Instant.parse(ts);
-        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneOffset.UTC);
-        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        return zonedDateTime.format(outputFormatter);
-    }
-
     private void createDirectory(String directoryPath) {
         File directory = new File(directoryPath);
         if (!directory.exists()) {
@@ -60,5 +40,25 @@ public class FileEventBuilder implements EventStoreBuilder{
         } catch (IOException e) {
             System.err.println("Error writing to file: " + e.getMessage());
         }
+    }
+
+    private String dateFormatter(String ts) {
+        Instant instant = Instant.parse(ts);
+        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneOffset.UTC);
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        return zonedDateTime.format(outputFormatter);
+    }
+    @Override
+    public void save(String message) {
+        Gson gson = new Gson();
+        JsonObject event = gson.fromJson(message, JsonObject.class);
+        String ss = event.get("ss").getAsString();
+        String ts = event.get("ts").getAsString();
+        String formattedTs = dateFormatter(ts);
+        String directoryPath =  baseDirectory + "/eventstore/prediction.Weather/" + ss;
+        createDirectory(directoryPath);
+        String filepath = directoryPath + "/" + formattedTs + ".events";
+        writeToFile(filepath, message);
+
     }
 }

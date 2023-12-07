@@ -26,7 +26,7 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
     }
 
     public String getApiUrl(Location location) {
-    return "https://api.openweathermap.org/data/2.5/forecast?lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&appid=" + apikey + "&units=metric";
+        return "https://api.openweathermap.org/data/2.5/forecast?lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&appid=" + apikey + "&units=metric";
     }
 
     public JsonObject getJsonData(String apiUrl) throws IOException {
@@ -35,7 +35,7 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
         return parser.parse(result.text()).getAsJsonObject();
     }
 
-    private Instant dateFormatter(String date){
+    private Instant dateFormatter(String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime localDateTime = LocalDateTime.parse(date, formatter);
         return localDateTime.atZone(ZoneId.systemDefault()).toInstant();
@@ -62,7 +62,6 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
             for (int i = 0; i < list.size(); i++) {
                 JsonObject listItem = list.get(i).getAsJsonObject();
                 String hour = String.valueOf(listItem.get("dt_txt")).substring(12, 20);
-
                 if (hour.equals("12:00:00")) {
                     Weather weather = createWeatherObject(listItem, location);
                     weatherList.add(weather);

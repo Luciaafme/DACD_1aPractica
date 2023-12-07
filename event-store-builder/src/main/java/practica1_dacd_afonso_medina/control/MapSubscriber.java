@@ -2,14 +2,11 @@ package practica1_dacd_afonso_medina.control;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import practica1_dacd_afonso_medina.control.exception.ReceiveException;
-
 import javax.jms.*;
 
 public class MapSubscriber implements Subscriber{
     private static final String topicName = "prediction.Weather";
     private static final String brokerUrl =  "tcp://localhost:61616";
-    private Connection connection;
-    private Session session;
     private  FileEventBuilder fileEventBuilder;
 
     public MapSubscriber(FileEventBuilder fileEventBuilder) {
@@ -20,10 +17,10 @@ public class MapSubscriber implements Subscriber{
     public void start() throws ReceiveException {
         try {
             ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(brokerUrl);
-            connection = connectionFactory.createConnection();
+            Connection connection = connectionFactory.createConnection();
             connection.setClientID("weather-provider");
             connection.start();
-            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             MessageConsumer consumer = session.createDurableSubscriber(session.createTopic(topicName), "weather-provider_" + topicName);
             consumer.setMessageListener(this::processMessage);
         } catch (JMSException e) {

@@ -18,8 +18,5 @@ public class Location {
         return longitude;
     }
 
-    public String getIsland() {
-        return island;
-    }
 }
 
