@@ -12,22 +12,34 @@ School of computer engineering
 
 # Functionality
 
-The objective of this internship is to develop a Java application that performs periodic queries, every 6 hours, to the API of a weather service to obtain the weather forecast for the 8 islands for the next 5 days at 12 p.m. each day. The acquired information must be stored in a SQLite database, where there will be a dedicated table for each island and an entry for each day. In these tables will be stored, for each day, the meteorological data, including temperature, precipitation probability, humidity, clouds and wind speed.
+
+In this project two modules have been developed. The provider module is designed to periodically fetch meteorological data from the OpenWeather API for the 8 islands over the next 5 days, precisely at 12 p.m. daily, with a frequency of every 6 hours. Subsequently, the module transmits this event to the "prediction.Weather" topic.
+
+On the other hand, the Event Store Builder module is responsible for the organized temporal storage of events obtained from the broker. It subscribes to the relevant topic, serializing events in the eventstore directory following a specific structure: "eventstore/prediction.Weather/{ss}/{YYYYMMDD}.events." Here, YYYYMMDD represents the year, month, and day derived from the event's timestamp, while ".events" serves as the file extension for storing events associated with a specific day.
 
 API --> https://openweathermap.org/forecast5
 
 
 # How to run the program
 
-To make the program work you must enter the apikey and the name of the database as main parameters as specified in the images below.
+This process involves downloading, extracting, and running two modules - event-store-builder and weather-provider. The first module is responsible for creating the "eventstore" directory at a specified location, and the second module requires your API key as a         parameter for execution.
 
-First step: 
+You should follow these steps: 
+1. Download the ZIP files from the release.
+2. Unzip the contents of each ZIP file to the location of your choice.
+3. Run the event-store-builder module:
+   >Execute the event-store-builder module from its location within your system. Use the provided image as a reference, passing the desired path as a parameter to create the "eventstore" directory. As an example, we want to create this directory on the Desktop.
 
-<img width="492" alt="image" src="https://github.com/Luciaafme/DACD_1aPractica/assets/145342904/08257ec3-d914-41ca-b94d-a628151d321b">
 
-Second step:
+![image](https://github.com/Luciaafme/DACD_1aPractica/assets/145342904/ec58170d-1440-491e-a4bf-e765b5055789)
+ 
 
-<img width="529" alt="image" src="https://github.com/Luciaafme/DACD_1aPractica/assets/145342904/2de98c67-2eb1-4668-a47f-76a6f1890009">
+4. Next, run the weather-provider module:
+   >Execute the weather-provider module from its location within your system, following the same approach as in the previous step. This time, pass your API key as a parameter.
+
+
+![image](https://github.com/Luciaafme/DACD_1aPractica/assets/145342904/b7251a5a-1f2d-4ef1-8c10-c788098fcb64)
+
 
 
 # Resources used
