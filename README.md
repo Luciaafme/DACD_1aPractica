@@ -51,12 +51,12 @@ Gson
             <version>2.10.1</version>
         </dependency>
 
-SqLite
+ActiveMQ
 
-        <dependency>
-            <groupId>org.xerial</groupId>
-            <artifactId>sqlite-jdbc</artifactId>
-            <version>3.34.0</version>
+            <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-client</artifactId>
+            <version>5.15.2</version>
         </dependency>
 
 Finally, for documentation, Markdown, a plain text formatting syntax that facilitates the creation of readable and well-structured documents, was used. Markdown is widely used for writing technical documentation and READMEs in GitHub repositories, due to its simplicity and readability.
@@ -67,16 +67,47 @@ Finally, for documentation, Markdown, a plain text formatting syntax that facili
     
 # Design
 
-Class Diagram
+The application design follows the principles of object-oriented design and utilizes the Model-View-Controller (MVC) architectural pattern to separate concerns and maintain modular and easily maintainable code. 
 
-<img width="582" alt="image" src="https://github.com/Luciaafme/DACD_1aPractica/assets/145342904/5b88e1ff-79e3-4ee1-baeb-161853c542e1">
-
-
+In this particular application, the decision to create two modules, "weather-provider" and "event-store-builder," suggests a modular and component-based approach. Let's break down the reasons for creating these modules:
 
 
-First of all, two POJO classes have been created, Weather and Location, in order to extract the information from the JSON provided by the API and set the values of each attribute of the variables. Both classes belong to the model layer, Weather stores information about the weather conditions and Location represents information about the geographic location. Also in the model layer we can see two interfaces WeatherSupplier and WeatherStore
+> ### *Weather Provider Module*:
 
-Regarding the control layer, we have the OpenWeatherMapSupplier class which is in charge of interacting with the OpenWeatherMap API to obtain weather data, this class implements the WeatherSupplier interface which contains methods that must be implemented in the class. SQLiteWeatherStore is use to interact with a SQLite database and manage the storage of weather data, this class also implements an interface called WeatherSupplier. Furthermore, the Weather Controller class is responsible for coordinating the weather data requests through OpenWeatherMapSupplier and storing them in the database through SQLiteWeatherStore. Finally the Main which is in charge of creating the necessary objects in Weathercontroler and deciding the frequency with which the application is executed. The control layer is responsible for acting as an intermediary between the model layer and the view layer, which in this program has not been required as there is no user interface.
+ This module likely handles the functionality related to retrieving weather information. It encapsulates the logic for interacting with the weather API, processing the data, and providing it to a message broker (ActiveMQ). 
+
+(Insert class diagram Weather-Provider)
+
+In the control layer we can see these classes:
+
+-  **JmsWeatherStore** class implements the **WeatherStore** interface, providing functionality to save weather predictions to a message broker (ActiveMQ) using Java Message Service (JMS).
+
+-  **OpenWeatherMapSupplier** class is in charge of interacting with the OpenWeatherMap API to obtain weather data, this class implements the **WeatherSupplier** interface which contains methods that must be implemented in the class.
+
+- **WeatherController** class, extending TimerTask, orchestrates the periodic retrieval and storage of weather data for predefined locations
+
+- **Main** which is in charge of creating the necessary objects in Weathercontroler and deciding the frequency with which the application is executed. 
 
 
-This design adheres to the SOLID principles, promoting scalability and maintenance of the system over time. The clear separation of responsibilities between the model, view, and controller layers enhances code organization and facilitates the extension and modification of the system. The use of interfaces WeatherSupplier and WeatherStore adheres to SOLID's Dependency Inversion Principle, allowing for flexibility and easy substitution of components. Additionally, the application of the Single Responsibility Principle (SRP) is evident in the design through the distinct responsibilities assigned to each class within both the model and control layers.
+On the other hand in the model layer:
+
+- **Weather** stores information about the weather conditions 
+- **Location** represents information about the geographic location.
+
+  
+> ### *Event Store Builder Module*:
+
+This module likely deals with the subscription to the broker and constructing or managing an event store.
+
+(Insert class diagram Event -  Store -Builder)
+
+Regarding the control layer we can see:
+
+- **MapSubscriber** class listens to a specific topic on a message broker (ActiveMQ in this case) and processes incoming messages this class implements the **Subscriber** interface.
+- **FileEventBuilder** class builds and stores events to a file system based on the content of incoming messages implements the **EventStoreBuilder**.
+- **Main** class is the entry point for the application.
+
+
+
+ These classes adhere to SOLID principles; the Single Responsibility Principle is followed as each class has a specific and well-defined responsibility. The Dependency Inversion Principle is applied by using abstractions like interfaces, promoting flexibility and ease of extension. Additionally, the Open/Closed Principle is considered, allowing for potential future extensions without modifying existing code. Overall, the design encourages modularity, maintainability, and adherence to SOLID principles for effective software development.
+
