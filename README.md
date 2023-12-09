@@ -88,7 +88,9 @@ In this particular application, the decision to create two modules, "weather-pro
 
  This module likely handles the functionality related to retrieving weather information. It encapsulates the logic for interacting with the weather API, processing the data, and providing it to a message broker (ActiveMQ). 
 
-(Insert class diagram Weather-Provider)
+![image](https://github.com/Luciaafme/DACD_1aPractica/assets/145342904/d744d944-dd4d-40b8-8906-86154a68b5b4)
+
+
 
 In the control layer we can see these classes:
 
@@ -111,7 +113,9 @@ On the other hand in the model layer:
 
 This module likely deals with the subscription to the broker and constructing or managing an event store.
 
-(Insert class diagram Event -  Store -Builder)
+
+![image](https://github.com/Luciaafme/DACD_1aPractica/assets/145342904/66f56817-c003-4bd8-8f0e-cfcb6e54aa3b)
+
 
 Regarding the control layer we can see:
 
