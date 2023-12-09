@@ -25,5 +25,6 @@ public class Weather {
         this.precipitation = precipitation;
         this.location = location;
     }
+
 }
 

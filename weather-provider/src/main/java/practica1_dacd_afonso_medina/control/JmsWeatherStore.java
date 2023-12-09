@@ -10,8 +10,8 @@ import java.time.Instant;
 import java.util.List;
 
 public class JmsWeatherStore implements WeatherStore{
-    private static final String brokerUrl = "tcp://localhost:61616";
-    private static final String topicName = "prediction.Weather";
+    private final String brokerUrl = "tcp://localhost:61616";
+    private final String topicName = "prediction.Weather";
 
     @Override
     public void save(List<Weather> weatherPrediction) throws StoreException{
