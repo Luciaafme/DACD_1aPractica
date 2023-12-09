@@ -22,7 +22,7 @@ API --> https://openweathermap.org/forecast5
 
 # How to run the program
 
-This process involves downloading, extracting, and running two modules - event-store-builder and weather-provider. The first module is responsible for creating the "eventstore" directory at a specified location, and the second module requires your API key as a         parameter for execution.
+This process involves downloading, extracting, and running two modules event-store-builder and weather-provider. The first module is responsible for creating the "eventstore" directory at a specified location, and the second module requires your API key as a         parameter for execution.
 
 You should follow these steps: 
 1. Install and Activate the broker ActiveMq in your system
