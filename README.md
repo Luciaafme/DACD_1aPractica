@@ -25,7 +25,7 @@ API --> https://openweathermap.org/forecast5
 This process involves downloading, extracting, and running two modules event-store-builder and weather-provider. The first module is responsible for creating the "eventstore" directory at a specified location, and the second module requires your API key as a         parameter for execution.
 
 You should follow these steps: 
-1. Install and Activate the broker ActiveMq in your system
+1. Install and Activate the broker ActiveMq in your system.
 2. Download the ZIP files from the release.
 3. Unzip the contents of each ZIP file to the location of your choice.
 4. Run the event-store-builder module:
@@ -101,7 +101,7 @@ In the control layer we can see these classes:
 
 - **WeatherController** class, extending TimerTask, orchestrates the periodic retrieval and storage of weather data for predefined locations
 
-- **Main** which is in charge of creating the necessary objects in Weathercontroler and deciding the frequency with which the application is executed. 
+- **Main** which is in charge of creating the necessary objects in WeatherController and deciding the frequency with which the application is executed. 
 
 
 On the other hand in the model layer:
@@ -121,7 +121,7 @@ This module likely deals with the subscription to the broker and constructing or
 Regarding the control layer we can see:
 
 - **MapSubscriber** class listens to a specific topic on a message broker (ActiveMQ in this case) and processes incoming messages this class implements the **Subscriber** interface.
-- **FileEventBuilder** class builds and stores events to a file system based on the content of incoming messages implements the **EventStoreBuilder**.
+- **FileEventBuilder** class that implements the **EventStoreBuilder** interface creates and stores events in a file system based on the content of incoming messages following the structure eventstore/prediction.Weather/{ss}/{YYYYMMDD}.events.
 - **Main** class is the entry point for the application.
 
 
