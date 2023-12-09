@@ -26,7 +26,7 @@ This process involves downloading, extracting, and running two modules event-sto
 
 You should follow these steps: 
 1. Install and Activate the broker ActiveMq in your system.
-2. Download the ZIP files from the release.
+2. Download the ZIP files from the latest release.
 3. Unzip the contents of each ZIP file to the location of your choice.
 4. Run the event-store-builder module:
    >Execute the event-store-builder module from its location within your system. Use the provided image as a reference, passing the desired path as a parameter to create the "eventstore" directory. As an example, we want to create this directory on the Desktop.
