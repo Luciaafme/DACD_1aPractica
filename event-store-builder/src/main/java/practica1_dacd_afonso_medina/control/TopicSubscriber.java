@@ -9,6 +9,8 @@ public class TopicSubscriber implements Subscriber{
     private final String topicName = "prediction.Weather";
     private final String brokerUrl =  "tcp://localhost:61616";
     private final FileEventBuilder fileEventBuilder;
+    private Connection connection;
+    private Session session;
 
     public TopicSubscriber(FileEventBuilder fileEventBuilder) {
         this.fileEventBuilder = fileEventBuilder;
@@ -18,10 +20,10 @@ public class TopicSubscriber implements Subscriber{
     public void start() throws ReceiveException {
         try {
             ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(brokerUrl);
-            Connection connection = connectionFactory.createConnection();
+            connection = connectionFactory.createConnection();
             connection.setClientID("weather-provider");
             connection.start();
-            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             MessageConsumer consumer = session.createDurableSubscriber(session.createTopic(topicName), "weather-provider_" + topicName);
             consumer.setMessageListener(this::processMessage);
         } catch (JMSException e) {

@@ -12,14 +12,16 @@ import java.util.List;
 public class JmsWeatherStore implements WeatherStore{
     private final String brokerUrl = "tcp://localhost:61616";
     private final String topicName = "prediction.Weather";
+    private Connection connection;
+    private Session session;
 
     @Override
     public void save(List<Weather> weatherPrediction) throws StoreException{
         try {
             ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(brokerUrl);
-            Connection connection = connectionFactory.createConnection();
+            connection = connectionFactory.createConnection();
             connection.start();
-            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             Destination destination = session.createTopic(topicName);
             MessageProducer producer = session.createProducer(destination);
             for (Weather weather : weatherPrediction) {
