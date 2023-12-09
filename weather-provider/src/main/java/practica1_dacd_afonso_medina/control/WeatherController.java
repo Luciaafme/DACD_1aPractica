@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.TimerTask;
 
 
-public class WeatherControler extends TimerTask {
-    private OpenWeatherMapSupplier openWeatherMapSupplier;
-    private JmsWeatherStore jmsWeatherStore;
+public class WeatherController extends TimerTask {
+    private final OpenWeatherMapSupplier openWeatherMapSupplier;
+    private final JmsWeatherStore jmsWeatherStore;
     List<Location> listLocation = List.of(
             new Location(28.12380904158049, -15.436162953343267, "GranCanaria"),
             new Location(28.463850790803008, -16.25097353346818, "Tenerife"),
@@ -20,7 +20,7 @@ public class WeatherControler extends TimerTask {
             new Location(28.094369991798228, -17.109467831251514, "LaGomera"),
             new Location(28.684160726614596, -17.76582062032028, "LaPalma"));
 
-    public WeatherControler(OpenWeatherMapSupplier openWeatherMapSupplier, JmsWeatherStore jmsWeatherStore) {
+    public WeatherController(OpenWeatherMapSupplier openWeatherMapSupplier, JmsWeatherStore jmsWeatherStore) {
         this.openWeatherMapSupplier = openWeatherMapSupplier;
         this.jmsWeatherStore = jmsWeatherStore;
     }
@@ -32,7 +32,7 @@ public class WeatherControler extends TimerTask {
                 jmsWeatherStore.save(weatherList);
             }
         }catch (StoreException e){
-            System.out.println("ERROR: " + e);
+            throw new RuntimeException(e);
         }
     }
     @Override

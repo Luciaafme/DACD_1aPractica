@@ -5,6 +5,7 @@ import org.jsoup.nodes.Document;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import practica1_dacd_afonso_medina.control.exception.OpenWeatherApiException;
 import practica1_dacd_afonso_medina.model.Location;
 import practica1_dacd_afonso_medina.model.Weather;
 import java.io.IOException;
@@ -29,10 +30,14 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
         return "https://api.openweathermap.org/data/2.5/forecast?lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&appid=" + apikey + "&units=metric";
     }
 
-    public JsonObject getJsonData(String apiUrl) throws IOException {
-        Document result = Jsoup.connect(apiUrl).ignoreContentType(true).get();
-        JsonParser parser = new JsonParser();
-        return parser.parse(result.text()).getAsJsonObject();
+    public JsonObject getJsonData(String apiUrl) throws OpenWeatherApiException {
+        try {
+            Document result = Jsoup.connect(apiUrl).ignoreContentType(true).get();
+            JsonParser parser = new JsonParser();
+            return parser.parse(result.text()).getAsJsonObject();
+        } catch (IOException e) {
+            throw new OpenWeatherApiException("Error getting JSON data from OpenWeatherMap API", e);
+        }
     }
 
     private Instant dateFormatter(String date) {
@@ -67,8 +72,8 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
                     weatherList.add(weather);
                 }
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (OpenWeatherApiException e) {
+            e.printStackTrace();
         }
         return weatherList;
     }
