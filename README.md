@@ -32,14 +32,16 @@ You should follow these steps:
    >Execute the event-store-builder module from its location within your system. Use the provided image as a reference, passing the desired path as a parameter to create the "eventstore" directory. As an example, we want to create this directory on the Desktop.
 
 
-![image](https://github.com/Luciaafme/DACD_1aPractica/assets/145342904/ec58170d-1440-491e-a4bf-e765b5055789)
+![image](https://github.com/Luciaafme/DACD_2aPractica/assets/145342904/d103f887-a535-4a22-8b6d-2273ed3840f3)
+
  
 
 5. Next, run the weather-provider module:
    >Execute the weather-provider module from its location within your system, following the same approach as in the previous step. This time, pass your API key as a parameter.
 
 
-![image](https://github.com/Luciaafme/DACD_1aPractica/assets/145342904/b7251a5a-1f2d-4ef1-8c10-c788098fcb64)
+![image](https://github.com/Luciaafme/DACD_2aPractica/assets/145342904/c158456e-2951-404d-a545-44883e206d4e)
+
 
 
 
