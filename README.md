@@ -25,16 +25,17 @@ API --> https://openweathermap.org/forecast5
 This process involves downloading, extracting, and running two modules - event-store-builder and weather-provider. The first module is responsible for creating the "eventstore" directory at a specified location, and the second module requires your API key as a         parameter for execution.
 
 You should follow these steps: 
-1. Download the ZIP files from the release.
-2. Unzip the contents of each ZIP file to the location of your choice.
-3. Run the event-store-builder module:
+1. Install and Activate the broker ActiveMq in your system
+2. Download the ZIP files from the release.
+3. Unzip the contents of each ZIP file to the location of your choice.
+4. Run the event-store-builder module:
    >Execute the event-store-builder module from its location within your system. Use the provided image as a reference, passing the desired path as a parameter to create the "eventstore" directory. As an example, we want to create this directory on the Desktop.
 
 
 ![image](https://github.com/Luciaafme/DACD_1aPractica/assets/145342904/ec58170d-1440-491e-a4bf-e765b5055789)
  
 
-4. Next, run the weather-provider module:
+5. Next, run the weather-provider module:
    >Execute the weather-provider module from its location within your system, following the same approach as in the previous step. This time, pass your API key as a parameter.
 
 
