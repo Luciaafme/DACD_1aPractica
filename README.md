@@ -12,22 +12,34 @@ School of computer engineering
 
 # Functionality
 
-The objective of this internship is to develop a Java application that performs periodic queries, every 6 hours, to the API of a weather service to obtain the weather forecast for the 8 islands for the next 5 days at 12 p.m. each day. The acquired information must be stored in a SQLite database, where there will be a dedicated table for each island and an entry for each day. In these tables will be stored, for each day, the meteorological data, including temperature, precipitation probability, humidity, clouds and wind speed.
+
+In this project two modules have been developed. The provider module is designed to periodically fetch meteorological data from the OpenWeather API for the 8 islands over the next 5 days, precisely at 12 p.m. daily, with a frequency of every 6 hours. Subsequently, the module transmits this event to the "prediction.Weather" topic.
+
+On the other hand, the Event Store Builder module is responsible for the organized temporal storage of events obtained from the broker. It subscribes to the relevant topic, serializing events in the eventstore directory following a specific structure: "eventstore/prediction.Weather/{ss}/{YYYYMMDD}.events." Here, YYYYMMDD represents the year, month, and day derived from the event's timestamp, while ".events" serves as the file extension for storing events associated with a specific day.
 
 API --> https://openweathermap.org/forecast5
 
 
 # How to run the program
 
-To make the program work you must enter the apikey and the name of the database as main parameters as specified in the images below.
+This process involves downloading, extracting, and running two modules - event-store-builder and weather-provider. The first module is responsible for creating the "eventstore" directory at a specified location, and the second module requires your API key as a         parameter for execution.
 
-First step: 
+You should follow these steps: 
+1. Download the ZIP files from the release.
+2. Unzip the contents of each ZIP file to the location of your choice.
+3. Run the event-store-builder module:
+   >Execute the event-store-builder module from its location within your system. Use the provided image as a reference, passing the desired path as a parameter to create the "eventstore" directory. As an example, we want to create this directory on the Desktop.
 
-<img width="492" alt="image" src="https://github.com/Luciaafme/DACD_1aPractica/assets/145342904/08257ec3-d914-41ca-b94d-a628151d321b">
 
-Second step:
+![image](https://github.com/Luciaafme/DACD_1aPractica/assets/145342904/ec58170d-1440-491e-a4bf-e765b5055789)
+ 
 
-<img width="529" alt="image" src="https://github.com/Luciaafme/DACD_1aPractica/assets/145342904/2de98c67-2eb1-4668-a47f-76a6f1890009">
+4. Next, run the weather-provider module:
+   >Execute the weather-provider module from its location within your system, following the same approach as in the previous step. This time, pass your API key as a parameter.
+
+
+![image](https://github.com/Luciaafme/DACD_1aPractica/assets/145342904/b7251a5a-1f2d-4ef1-8c10-c788098fcb64)
+
 
 
 # Resources used
@@ -51,12 +63,12 @@ Gson
             <version>2.10.1</version>
         </dependency>
 
-SqLite
+ActiveMQ
 
-        <dependency>
-            <groupId>org.xerial</groupId>
-            <artifactId>sqlite-jdbc</artifactId>
-            <version>3.34.0</version>
+            <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-client</artifactId>
+            <version>5.15.2</version>
         </dependency>
 
 Finally, for documentation, Markdown, a plain text formatting syntax that facilitates the creation of readable and well-structured documents, was used. Markdown is widely used for writing technical documentation and READMEs in GitHub repositories, due to its simplicity and readability.
@@ -67,16 +79,47 @@ Finally, for documentation, Markdown, a plain text formatting syntax that facili
     
 # Design
 
-Class Diagram
+The application design follows the principles of object-oriented design and utilizes the Model-View-Controller (MVC) architectural pattern to separate concerns and maintain modular and easily maintainable code. 
 
-<img width="582" alt="image" src="https://github.com/Luciaafme/DACD_1aPractica/assets/145342904/5b88e1ff-79e3-4ee1-baeb-161853c542e1">
-
-
+In this particular application, the decision to create two modules, "weather-provider" and "event-store-builder," suggests a modular and component-based approach. Let's break down the reasons for creating these modules:
 
 
-First of all, two POJO classes have been created, Weather and Location, in order to extract the information from the JSON provided by the API and set the values of each attribute of the variables. Both classes belong to the model layer, Weather stores information about the weather conditions and Location represents information about the geographic location. Also in the model layer we can see two interfaces WeatherSupplier and WeatherStore
+> ### *Weather Provider Module*:
 
-Regarding the control layer, we have the OpenWeatherMapSupplier class which is in charge of interacting with the OpenWeatherMap API to obtain weather data, this class implements the WeatherSupplier interface which contains methods that must be implemented in the class. SQLiteWeatherStore is use to interact with a SQLite database and manage the storage of weather data, this class also implements an interface called WeatherSupplier. Furthermore, the Weather Controller class is responsible for coordinating the weather data requests through OpenWeatherMapSupplier and storing them in the database through SQLiteWeatherStore. Finally the Main which is in charge of creating the necessary objects in Weathercontroler and deciding the frequency with which the application is executed. The control layer is responsible for acting as an intermediary between the model layer and the view layer, which in this program has not been required as there is no user interface.
+ This module likely handles the functionality related to retrieving weather information. It encapsulates the logic for interacting with the weather API, processing the data, and providing it to a message broker (ActiveMQ). 
+
+(Insert class diagram Weather-Provider)
+
+In the control layer we can see these classes:
+
+-  **JmsWeatherStore** class implements the **WeatherStore** interface, providing functionality to save weather predictions to a message broker (ActiveMQ) using Java Message Service (JMS).
+
+-  **OpenWeatherMapSupplier** class is in charge of interacting with the OpenWeatherMap API to obtain weather data, this class implements the **WeatherSupplier** interface which contains methods that must be implemented in the class.
+
+- **WeatherController** class, extending TimerTask, orchestrates the periodic retrieval and storage of weather data for predefined locations
+
+- **Main** which is in charge of creating the necessary objects in Weathercontroler and deciding the frequency with which the application is executed. 
 
 
-This design adheres to the SOLID principles, promoting scalability and maintenance of the system over time. The clear separation of responsibilities between the model, view, and controller layers enhances code organization and facilitates the extension and modification of the system. The use of interfaces WeatherSupplier and WeatherStore adheres to SOLID's Dependency Inversion Principle, allowing for flexibility and easy substitution of components. Additionally, the application of the Single Responsibility Principle (SRP) is evident in the design through the distinct responsibilities assigned to each class within both the model and control layers.
+On the other hand in the model layer:
+
+- **Weather** stores information about the weather conditions 
+- **Location** represents information about the geographic location.
+
+  
+> ### *Event Store Builder Module*:
+
+This module likely deals with the subscription to the broker and constructing or managing an event store.
+
+(Insert class diagram Event -  Store -Builder)
+
+Regarding the control layer we can see:
+
+- **MapSubscriber** class listens to a specific topic on a message broker (ActiveMQ in this case) and processes incoming messages this class implements the **Subscriber** interface.
+- **FileEventBuilder** class builds and stores events to a file system based on the content of incoming messages implements the **EventStoreBuilder**.
+- **Main** class is the entry point for the application.
+
+
+
+ These classes adhere to SOLID principles; the Single Responsibility Principle is followed as each class has a specific and well-defined responsibility. The Dependency Inversion Principle is applied by using abstractions like interfaces, promoting flexibility and ease of extension. Additionally, the Open/Closed Principle is considered, allowing for potential future extensions without modifying existing code. Overall, the design encourages modularity, maintainability, and adherence to SOLID principles for effective software development.
+
