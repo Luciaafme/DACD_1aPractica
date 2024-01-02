@@ -26,13 +26,14 @@ This process involves downloading, extracting, and running two modules event-sto
 
 You should follow these steps: 
 1. Install and Activate the broker ActiveMq in your system.
-2. Download the ZIP files from the release.
+2. Download the ZIP files from the latest release.
 3. Unzip the contents of each ZIP file to the location of your choice.
 4. Run the event-store-builder module:
    >Execute the event-store-builder module from its location within your system. Use the provided image as a reference, passing the desired path as a parameter to create the "eventstore" directory. As an example, we want to create this directory on the Desktop.
 
+![image](https://github.com/Luciaafme/DACD_2aPractica/assets/145342904/7c376fc8-bfde-4a80-8f33-1f7a50b4b47f)
 
-![image](https://github.com/Luciaafme/DACD_2aPractica/assets/145342904/d103f887-a535-4a22-8b6d-2273ed3840f3)
+
 
  
 
@@ -40,7 +41,8 @@ You should follow these steps:
    >Execute the weather-provider module from its location within your system, following the same approach as in the previous step. This time, pass your API key as a parameter.
 
 
-![image](https://github.com/Luciaafme/DACD_2aPractica/assets/145342904/c158456e-2951-404d-a545-44883e206d4e)
+![image](https://github.com/Luciaafme/DACD_2aPractica/assets/145342904/eefd6b10-99be-4834-a1ea-0113d9c6569e)
+
 
 
 
@@ -91,7 +93,8 @@ In this particular application, the decision to create two modules, "weather-pro
 
  This module likely handles the functionality related to retrieving weather information. It encapsulates the logic for interacting with the weather API, processing the data, and providing it to a message broker (ActiveMQ). 
 
-![image](https://github.com/Luciaafme/DACD_1aPractica/assets/145342904/d744d944-dd4d-40b8-8906-86154a68b5b4)
+![image](https://github.com/Luciaafme/DACD_2aPractica/assets/145342904/182c4d9a-0487-4f26-bc89-c851481917e5)
+
 
 
 
@@ -116,8 +119,9 @@ On the other hand in the model layer:
 
 This module likely deals with the subscription to the broker and constructing or managing an event store.
 
+![image](https://github.com/Luciaafme/DACD_2aPractica/assets/145342904/b4684014-f6c7-4f08-bf50-a3f809f31b4f)
 
-![image](https://github.com/Luciaafme/DACD_1aPractica/assets/145342904/66f56817-c003-4bd8-8f0e-cfcb6e54aa3b)
+
 
 
 Regarding the control layer we can see:
