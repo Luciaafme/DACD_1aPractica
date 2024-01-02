@@ -53,13 +53,13 @@ public class FileEventBuilder implements EventStoreBuilder{
     }
 
     @Override
-    public void save(String message) throws FileEventBuilderException {
+    public void save(String message, String topic) throws FileEventBuilderException {
         Gson gson = new Gson();
         JsonObject event = gson.fromJson(message, JsonObject.class);
         String ss = event.get("ss").getAsString();
         String ts = event.get("ts").getAsString();
         String formattedTs = dateFormatter(ts);
-        String directoryPath =  baseDirectory + "/eventstore/prediction.Weather/" + ss;
+        String directoryPath =  baseDirectory + "/datalake/eventstore/" + topic + "/" + ss;
         createDirectory(directoryPath);
         String filepath = directoryPath + "/" + formattedTs + ".events";
         writeToFile(filepath, message);

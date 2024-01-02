@@ -5,15 +5,18 @@ import practica1_dacd_afonso_medina.control.exception.FileEventBuilderException;
 import practica1_dacd_afonso_medina.control.exception.ReceiveException;
 import javax.jms.*;
 
-public class TopicSubscriber implements Subscriber{
-    private final String topicName = "prediction.Weather";
-    private final String brokerUrl =  "tcp://localhost:61616";
+public class TopicSubscriber implements Subscriber {
+    private final String brokerUrl = "tcp://localhost:61616";
     private final FileEventBuilder fileEventBuilder;
     private Connection connection;
     private Session session;
+    private final String topicName;
+    private final String subscriberName;
 
-    public TopicSubscriber(FileEventBuilder fileEventBuilder) {
+    public TopicSubscriber(FileEventBuilder fileEventBuilder, String topicName, String subscriberName) {
         this.fileEventBuilder = fileEventBuilder;
+        this.topicName = topicName;
+        this.subscriberName = subscriberName;
     }
 
     @Override
@@ -21,22 +24,26 @@ public class TopicSubscriber implements Subscriber{
         try {
             ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(brokerUrl);
             connection = connectionFactory.createConnection();
-            connection.setClientID("weather-provider");
+            connection.setClientID(subscriberName);
             connection.start();
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            MessageConsumer consumer = session.createDurableSubscriber(session.createTopic(topicName), "weather-provider_" + topicName);
+            MessageConsumer consumer = session.createDurableSubscriber(
+                    session.createTopic(topicName),
+                    subscriberName + "_" + topicName
+            );
             consumer.setMessageListener(this::processMessage);
         } catch (JMSException e) {
             throw new ReceiveException(e.getMessage(), e);
         }
     }
-    private void processMessage(Message message){
+
+    private void processMessage(Message message) {
         try {
             String text = ((TextMessage) message).getText();
             System.out.println("Message received: " + text);
-            fileEventBuilder.save(text);
+            fileEventBuilder.save(text, topicName);
         } catch (JMSException | FileEventBuilderException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 }
