@@ -10,7 +10,9 @@
     <packaging>pom</packaging>
     <modules>
         <module>weather-provider</module>
-        <module>event-store-builder</module>
+        <module>datalake-builder</module>
+        <module>travel-planner</module>
+        <module>accommodation-provider</module>
     </modules>
 
     <properties>
