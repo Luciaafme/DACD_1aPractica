@@ -14,7 +14,7 @@ public class Booking {
 
     public Booking(Hotel hotel, String checkIn, String checkOut, String platform, Double price) {
         this.ts = Instant.now();
-        this.ss = "travel-provider";
+        this.ss = "accommodation-provider";
         this.hotel = hotel;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
