@@ -3,6 +3,7 @@ import com.google.gson.*;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import practica1_dacd_afonso_medina.control.exception.XoteloApiException;
 import practica1_dacd_afonso_medina.model.Booking;
 import practica1_dacd_afonso_medina.model.Hotel;
 import java.io.*;
@@ -23,18 +24,23 @@ public class XoteloApiSupplier implements AccommodationSupplier {
         } catch (FileNotFoundException e) { throw new RuntimeException(e); }
         return hotelList;
     }
-    private static List<Booking> fetchPricesForDates(OkHttpClient client, Hotel hotel) throws IOException {
+    private static List<Booking> fetchPricesForDates(OkHttpClient client, Hotel hotel) throws XoteloApiException {
         List<Booking> listHotels = new ArrayList<>();
         LocalTime currentTime = LocalTime.now();
         int startDay = currentTime.isAfter(LocalTime.parse("12:00:00")) ? 1 : 0;
         for (int i = startDay; i < 5; i++) {
             String checkOut = getFormattedDate(i + 1), checkIn = getFormattedDate(i);
             String apiUrl = "https://data.xotelo.com/api/rates?hotel_key=" + hotel.getId() + "&chk_in=" + checkIn + "&chk_out=" + checkOut + "&currency=EUR";
-            Response xoteloResponse = client.newCall(new Request.Builder().url(apiUrl).get().build()).execute();
-            listHotels.addAll(createHotelObjects(xoteloResponse.body().string(), hotel, checkIn, checkOut));
+            try {
+                Response xoteloResponse = client.newCall(new Request.Builder().url(apiUrl).get().build()).execute();
+                listHotels.addAll(createHotelObjects(xoteloResponse.body().string(), hotel, checkIn, checkOut));
+            } catch (IOException e) {
+                throw new XoteloApiException("Error fetching prices from Xotelo API", e);
+            }
         }
         return listHotels;
     }
+
     private static List<Booking> createHotelObjects(String xoteloData, Hotel hotel, String checkIn, String checkOut) {
         List<Booking> listHotels = new ArrayList<>();
         JsonObject responseJson = new Gson().fromJson(xoteloData, JsonObject.class);
@@ -58,8 +64,8 @@ public class XoteloApiSupplier implements AccommodationSupplier {
         for (Hotel hotel : hotelList) {
             try {
                 listHotels.addAll(fetchPricesForDates(client, hotel));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            } catch (XoteloApiException e) {
+                e.printStackTrace();
             }
         }
         return listHotels;
