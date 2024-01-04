@@ -19,6 +19,7 @@ public class XoteloApiSupplier implements AccommodationSupplier {
         try (Scanner scanner = new Scanner(new File(HOTEL_INFO_FILE_PATH))) {
             while (scanner.hasNextLine()) {
                 String[] columns = scanner.nextLine().split(" ");
+                System.out.println("Reading");
                 if (columns.length >= 3) hotelList.add(new Hotel(columns[0], columns[1], columns[2], columns[3]));
             }
         } catch (FileNotFoundException e) { throw new RuntimeException(e); }
