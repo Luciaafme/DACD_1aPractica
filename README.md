@@ -93,7 +93,9 @@ In this particular application, the decision to create two modules, "weather-pro
 
  This module likely handles the functionality related to retrieving weather information. It encapsulates the logic for interacting with the weather API, processing the data, and providing it to a message broker (ActiveMQ). 
 
-![image](https://github.com/Luciaafme/DACD_2aPractica/assets/145342904/eb614517-f973-4e5b-81d1-64bc75e9f675)
+![image](https://github.com/Luciaafme/DACD_2aPractica/assets/145342904/0dfa08ec-90e0-4d91-89af-3afbeffbf15a)
+
+
 
 
 
@@ -119,8 +121,8 @@ On the other hand in the model layer:
 > ### *Event Store Builder Module*:
 
 This module likely deals with the subscription to the broker and constructing or managing an event store.
+![image](https://github.com/Luciaafme/DACD_2aPractica/assets/145342904/0a231ad6-425d-41e4-8b88-53f11e1af585)
 
-![image](https://github.com/Luciaafme/DACD_2aPractica/assets/145342904/cab61a40-9b72-4198-af79-a21399e1fe2d)
 
 
 
