@@ -1,4 +1,4 @@
-# Weather Forecast
+# Final Project: Travel Planner
 
 Lucía Afonso Medina
 
@@ -82,6 +82,28 @@ ActiveMQ
             <artifactId>activemq-client</artifactId>
             <version>5.15.2</version>
         </dependency>
+Http3
+
+      <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>5.0.0-alpha.11</version> 
+        </dependency>
+SqLite
+
+      <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.34.0</version>
+         </dependency>
+         
+Jcalendar 
+
+         <dependency>
+            <groupId>com.toedter</groupId>
+            <artifactId>jcalendar</artifactId>
+            <version>1.4</version>
+        </dependency> 
 
 Finally, for documentation, Markdown, a plain text formatting syntax that facilitates the creation of readable and well-structured documents, was used. Markdown is widely used for writing technical documentation and READMEs in GitHub repositories, due to its simplicity and readability.
 
