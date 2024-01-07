@@ -188,7 +188,8 @@ Regarding the control layer we can see:
 > ### *Travel Planner Module*:
 The Travel Planner module orchestrates travel planning by integrating information about hotels and weather forecasts. 
 
-(insert class diagram)
+![image](https://github.com/Luciaafme/DACD_2aPractica/assets/145342904/4ecd58f1-381e-43e8-8d76-6ff8c14a76b4)
+
 Control:
 
 - **DatamartManager:** Responsible for creating tables, inserting data into corresponding tables, and table deletion.
