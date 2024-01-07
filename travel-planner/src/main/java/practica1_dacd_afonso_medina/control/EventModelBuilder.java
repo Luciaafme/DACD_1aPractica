@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-public class EventStoreBuilder {
+public class EventModelBuilder {
     public Weather weatherBuilder(String jsonData) {
         JsonObject responseJson = new Gson().fromJson(jsonData, JsonObject.class);
         Instant instant = Instant.from(DateTimeFormatter.ISO_INSTANT.parse(responseJson.get("predictionTime").getAsString()));

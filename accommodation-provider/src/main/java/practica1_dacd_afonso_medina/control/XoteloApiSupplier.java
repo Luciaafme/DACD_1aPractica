@@ -11,8 +11,12 @@ import java.time.*;
 import java.util.*;
 
 public class XoteloApiSupplier implements AccommodationSupplier {
+    private static String HOTEL_INFO_FILE_PATH;
 
-    private static final String HOTEL_INFO_FILE_PATH = "accommodation-provider\\src\\main\\resources\\idHotel.tsv";
+    public XoteloApiSupplier(String HOTEL_INFO_FILE_PATH) {
+        this.HOTEL_INFO_FILE_PATH = HOTEL_INFO_FILE_PATH;
+    }
+
 
     private static List<Hotel> readHotelInfoFromFile() {
         List<Hotel> hotelList = new ArrayList<>();

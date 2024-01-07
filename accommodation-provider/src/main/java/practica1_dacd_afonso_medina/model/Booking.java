@@ -23,26 +23,6 @@ public class Booking {
     }
 
 
-    public Hotel getHotel() {
-        return hotel;
-    }
-
-    public String getCheckIn() {
-        return checkIn;
-    }
-
-    public String getCheckOut() {
-        return checkOut;
-    }
-
-    public String getPlatform() {
-        return platform;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
     @Override
     public String toString() {
         return "Booking{" +

@@ -3,9 +3,7 @@ package practica1_dacd_afonso_medina.control;
 import practica1_dacd_afonso_medina.control.exception.SqliteException;
 import practica1_dacd_afonso_medina.model.Hotel;
 import practica1_dacd_afonso_medina.model.Weather;
-
 import java.io.File;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.*;
@@ -14,19 +12,19 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-public class Datamart {
+public class DatamartManager {
     private final String dbpath;
+    private DbConnection dbConnection;
     private Connection connection;
     private Statement statement;
-    private EventStoreBuilder eventStoreBuilder;
+    private EventModelBuilder eventStoreBuilder;
 
-    public Datamart(String dbpath, EventStoreBuilder eventStoreBuilder) throws SqliteException {
+    public DatamartManager(String dbpath, EventModelBuilder eventStoreBuilder) throws SqliteException {
         this.dbpath = dbpath;
         this.eventStoreBuilder = eventStoreBuilder;
-
         try {
             new File(this.dbpath).getParentFile().mkdirs();
-            this.connection = connect(dbpath);
+            this.connection = dbConnection.connect(dbpath);
             this.statement = connection.createStatement();
             createTableWeather();
             createTableHotel();
@@ -127,17 +125,6 @@ public class Datamart {
             System.out.println("Delete operation completed successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-    }
-
-    public static Connection connect(String dbPath) throws SqliteException {
-        try {
-            String url = "jdbc:sqlite:" + dbPath;
-            Connection conn = DriverManager.getConnection(url);
-            System.out.println("Connection to SQLite has been established.");
-            return conn;
-        } catch (SQLException e) {
-            throw new SqliteException("Error establishing SQLite connection.", e);
         }
     }
 }
