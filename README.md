@@ -13,11 +13,18 @@ School of computer engineering
 # Functionality
 
 
-In this project two modules have been developed. The provider module is designed to periodically fetch meteorological data from the OpenWeather API for the 8 islands over the next 5 days, precisely at 12 p.m. daily, with a frequency of every 6 hours. Subsequently, the module transmits this event to the "prediction.Weather" topic.
+This project integrates information on accommodation options and meteorological forecasts for the 8 canary islands. 
 
-On the other hand, the Event Store Builder module is responsible for the organized temporal storage of events obtained from the broker. It subscribes to the relevant topic, serializing events in the eventstore directory following a specific structure: "eventstore/prediction.Weather/{ss}/{YYYYMMDD}.events." Here, YYYYMMDD represents the year, month, and day derived from the event's timestamp, while ".events" serves as the file extension for storing events associated with a specific day.
+The "weather-provider" module is designed to regularly retrieve meteorological data from the OpenWeather API for these islands over the next 5 days. This retrieval occurs precisely at 12 p.m. daily, with updates every 6 hours. Subsequently, the module transmits this data to the "prediction.Weather'' topic. In parallel, the "Accommodation-provider" module is responsible for obtaining nightly prices from various hotels for check-ins through the Xotelo API. It operates with a frequency of 6 hours and sends this information to the "prediction.Booking'' topic.
 
-API --> https://openweathermap.org/forecast5
+Additionally, the "datamart-store-builder" module manages the organized temporal storage of events sourced from the broker. It subscribes to the relevant topic, serializing events in the "datalake" directory following a specific structure: "datalake/eventstore/topic/{ss}/{YYYYMMDD}.events." Here, YYYYMMDD represents the year, month, and day derived from the event's timestamp, while ".events" serves as the file extension for storing events associated with a specific day.
+
+Furthermore, the travel-planner module with a user interface, responsible for creating datamarts with relevant information. This enables the offering of diverse stay options on an island to users, along with accurate meteorological predictions for those specific days.
+
+
+API OpenWeatherMap--> https://openweathermap.org/forecast5
+
+API Xotelo --> https://xotelo.com/
 
 
 # How to run the program
@@ -117,14 +124,31 @@ On the other hand in the model layer:
 - **Weather** stores information about the weather conditions 
 - **Location** represents information about the geographic location.
 
+> ### *Accommodation Provider Module*
+
+
+This module likely handles the functionality related to retrieving hotel information. It encapsulates the logic for interacting with the Xotelo API, processing the data, and providing it to a message broker (ActiveMQ). 
+
+![image](https://github.com/Luciaafme/DACD_2aPractica/assets/145342904/50fb7f22-3f21-4b88-a8f4-15ec19f84c1f)
+
+
+In the control layer we can see these classes:
+
+- The **JmsAccommodationStore** class implements the **AccommodationStore** interface, providing functionality to save booking predictions to a message broker (ActiveMQ) using Java Message Service (JMS).
+- The **XoteloApiSupplier** is in charge of interacting with the Xotelo API to obtain data of prices from different platforms for a determine hotel on a selected checkIn and checkOut , this class implements the **AccommodationSupplier** interface which contains methods that must be implemented in the class.
+- **AccommodationController** class, extending TimerTask, orchestrates the periodic retrieval and storage of booking data.
+- **Main** which is in charge of creating the necessary objects in AccommodationController and deciding the frequency with which the application is executed.
+
+On the other hand in the model layer:
+
+- **Booking** stores information about the booking data
+- **Hotel** represents information about the hotel. 
+
   
-> ### *Event Store Builder Module*:
+> ### *Datalake Builder Module*:
 
 This module likely deals with the subscription to the broker and constructing or managing an event store.
-![image](https://github.com/Luciaafme/DACD_2aPractica/assets/145342904/0a231ad6-425d-41e4-8b88-53f11e1af585)
-
-
-
+![image](https://github.com/Luciaafme/DACD_2aPractica/assets/145342904/978d120d-172f-4f2e-843a-506023e71cda)
 
 
 
@@ -134,7 +158,8 @@ Regarding the control layer we can see:
 - **FileEventBuilder** class that implements the **EventStoreBuilder** interface creates and stores events in a file system based on the content of incoming messages following the structure eventstore/prediction.Weather/{ss}/{YYYYMMDD}.events.
 - **Main** class is the entry point for the application.
 
-
+> ### *Travel Planner Module*:
 
  These classes adhere to SOLID principles; the Single Responsibility Principle is followed as each class has a specific and well-defined responsibility. The Dependency Inversion Principle is applied by using abstractions like interfaces, promoting flexibility and ease of extension. Additionally, the Open/Closed Principle is considered, allowing for potential future extensions without modifying existing code. Overall, the design encourages modularity, maintainability, and adherence to SOLID principles for effective software development.
 
+ 
