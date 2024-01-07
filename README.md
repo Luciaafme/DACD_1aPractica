@@ -115,7 +115,12 @@ Finally, for documentation, Markdown, a plain text formatting syntax that facili
 
 The application design follows the principles of object-oriented design and utilizes the Model-View-Controller (MVC) architectural pattern to separate concerns and maintain modular and easily maintainable code. 
 
-In this particular application, the decision to create two modules, "weather-provider" and "event-store-builder," suggests a modular and component-based approach. Let's break down the reasons for creating these modules:
+In this particular application, the decision to create four modules, "weather-provider", "booking-privider", "datalake-builder," and "travel-planner" suggests a modular and component-based approach. Let's break down the reasons for creating these modules:
+
+![image](https://github.com/Luciaafme/DACD_2aPractica/assets/145342904/0f8cf336-de0a-4893-8e16-1422553508d3)
+
+
+
 
 
 > ### *Weather Provider Module*:
@@ -181,6 +186,27 @@ Regarding the control layer we can see:
 - **Main** class is the entry point for the application.
 
 > ### *Travel Planner Module*:
+The Travel Planner module orchestrates travel planning by integrating information about hotels and weather forecasts. 
+
+(insert class diagram)
+Control:
+
+- **DatamartManager:** Responsible for creating tables, inserting data into corresponding tables, and table deletion.
+- **DbConnection:** Establishes a connection with the database.
+- **EventModelBuilder:** Processes each event by extracting relevant data to later insert it into the datamart.
+- MessageReceiver:** This class listens to a specific topic on a message broker (ActiveMQ in this case) and processes incoming messages. 
+- **Main:** Serves as the entry point for the application.
+Model:
+
+- **Hotel:** Contains information about hotel features.
+- **Weather:** Contains information about meteorological predictions.
+- **Location:** Holds information about the island and the zone.
+
+View:
+- **Interface:** Creates the user interface.
+- **WeatherCalculator:** Computes results related to weather to display to the user.
+-  **BookingCalculator:** Computes results related to hotel reservations to display to the user.
+
 
  These classes adhere to SOLID principles; the Single Responsibility Principle is followed as each class has a specific and well-defined responsibility. The Dependency Inversion Principle is applied by using abstractions like interfaces, promoting flexibility and ease of extension. Additionally, the Open/Closed Principle is considered, allowing for potential future extensions without modifying existing code. Overall, the design encourages modularity, maintainability, and adherence to SOLID principles for effective software development.
 
