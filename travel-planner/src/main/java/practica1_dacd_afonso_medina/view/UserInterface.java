@@ -107,7 +107,7 @@ public class UserInterface extends JFrame {
 
         resultTextArea.setText("This is the proposal for your trip to the selected island: " + selectedIsland +
                 " on the selected check-in: " + checkInDate + " and check-out: " + checkOutDate + ":\n\n" +
-                "Weather Prediction:\n" + weatherResult + "\n\nBooking Detaitracls:\n" + bookingResult);
+                "Weather Prediction:\n" + weatherResult + "\n\nBooking Details:\n" + bookingResult);
     }
 
     private String formatDate(JDateChooser dateChooser) {
