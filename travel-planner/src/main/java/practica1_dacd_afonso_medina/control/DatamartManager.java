@@ -48,6 +48,7 @@ public class DatamartManager {
             throw new SqliteException("Error creating 'prediction_Weather' table.", e);
         }
     }
+
     public void createTableHotel() throws SqliteException {
         try {
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS prediction_Booking ("
@@ -63,11 +64,13 @@ public class DatamartManager {
             throw new SqliteException("Error creating 'prediction_Booking' table.", e);
         }
     }
+
     public String dateFormatter(Instant date){
         LocalDateTime localDateTime = date.atZone(ZoneId.systemDefault()).toLocalDateTime();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return localDateTime.format(formatter);
     }
+
     public void insertWeather(String jsonData) throws SqliteException {
         Weather weather = eventStoreBuilder.weatherBuilder(jsonData);
         String insertQuery = "INSERT INTO prediction_Weather (predictionTime, zone, island, temperature, clouds, precipitation) " +
@@ -85,6 +88,7 @@ public class DatamartManager {
             throw new SqliteException("Error inserting data into rediction_Weather table", e);
         }
     }
+
     public void insertHotel(String jsonData) throws SqliteException{
         Hotel hotel = eventStoreBuilder.hotelBuilder(jsonData);
         if(hotel.getPrice() != 0.0) {
@@ -112,6 +116,7 @@ public class DatamartManager {
             }
         }
     }
+
     public void delete(String topicName){
         try {
             if(topicName.substring(11).equals("Weather")){
@@ -127,4 +132,5 @@ public class DatamartManager {
             e.printStackTrace();
         }
     }
+
 }

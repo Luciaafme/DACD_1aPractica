@@ -56,8 +56,6 @@ public class XoteloApiSupplier implements AccommodationSupplier {
         return listHotels;
     }
 
-
-
     private static List<Booking> createHotelObjects(String xoteloData, Hotel hotel, String checkIn, String checkOut) {
         List<Booking> listHotels = new ArrayList<>();
         JsonObject responseJson = new Gson().fromJson(xoteloData, JsonObject.class);
@@ -73,6 +71,7 @@ public class XoteloApiSupplier implements AccommodationSupplier {
         } else System.out.println("The 'result' property was not found in the JSON.");
         return listHotels;
     }
+
     @Override
     public List<Booking> getBooking() {
         List<Hotel> hotelList = readHotelInfoFromFile();
@@ -87,6 +86,7 @@ public class XoteloApiSupplier implements AccommodationSupplier {
         }
         return listHotels;
     }
+
     private static String getFormattedDate(int daysToAdd) {
         return String.valueOf(LocalDate.ofInstant(Instant.now().plusSeconds(daysToAdd * 24 * 60 * 60), ZoneId.systemDefault()));
     }

@@ -49,7 +49,6 @@ public class UserInterface extends JFrame {
         add(mainPanel);
     }
 
-
     private JPanel createInputComponents(Font font) {
         JPanel inputPanel = new JPanel(new GridLayout(5, 2, 10, 10));
         inputPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));

@@ -22,7 +22,6 @@ public class Booking {
         this.price = price;
     }
 
-
     @Override
     public String toString() {
         return "Booking{" +
