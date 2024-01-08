@@ -201,22 +201,24 @@ Regarding the control layer we can see:
 > ### *Travel Planner Module*:
 The Travel Planner module orchestrates travel planning by integrating information about hotels and weather forecasts. 
 
-![image](https://github.com/Luciaafme/DACD_2aPractica/assets/145342904/4ecd58f1-381e-43e8-8d76-6ff8c14a76b4)
+![image](https://github.com/Luciaafme/DACD_Final_Project/assets/145342904/137823ce-acf7-4fb9-982e-73a0fb904036)
 
-Control:
+
+In the control layer we can see these classes:
 
 - **DatamartManager:** Responsible for creating tables, inserting data into corresponding tables, and table deletion.
 - **DbConnection:** Establishes a connection with the database.
 - **EventModelBuilder:** Processes each event by extracting relevant data to later insert it into the datamart.
 - MessageReceiver:** This class listens to a specific topic on a message broker (ActiveMQ in this case) and processes incoming messages. 
 - **Main:** Serves as the entry point for the application.
-Model:
+
+On the other hand in the model layer:
 
 - **Hotel:** Contains information about hotel features.
 - **Weather:** Contains information about meteorological predictions.
 - **Location:** Holds information about the island and the zone.
 
-View:
+Finally on the view layer we have these classes:
 - **Interface:** Creates the user interface.
 - **WeatherCalculator:** Computes results related to weather to display to the user.
 -  **BookingCalculator:** Computes results related to hotel reservations to display to the user.
