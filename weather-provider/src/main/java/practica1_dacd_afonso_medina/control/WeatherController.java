@@ -3,6 +3,10 @@ package practica1_dacd_afonso_medina.control;
 import practica1_dacd_afonso_medina.control.exception.StoreException;
 import practica1_dacd_afonso_medina.model.Location;
 import practica1_dacd_afonso_medina.model.Weather;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.TimerTask;
 import java.io.File;
@@ -20,21 +24,26 @@ public class WeatherController extends TimerTask {
         this.jmsWeatherStore = jmsWeatherStore;
         this.listLocation = readLocationsFromFile(filePath);
     }
-
     private static List<Location> readLocationsFromFile(String filePath) {
         List<Location> locations = new ArrayList<>();
-        try (Scanner scanner = new Scanner(new File(filePath))) {
-            while (scanner.hasNextLine()) {
-                String[] columns = scanner.nextLine().split(" ");
-                if (columns.length >= 4) {
-                    double latitude = Double.parseDouble(columns[0]);
-                    double longitude = Double.parseDouble(columns[1]);
-                    String name = columns[2];
-                    String description = columns[3];
-                    locations.add(new Location(latitude, longitude, name, description));
+        try (InputStream inputStream = Main.class.getClassLoader().getResourceAsStream(filePath)) {
+            if (inputStream != null) {
+                try (Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8.name())) {
+                    while (scanner.hasNextLine()) {
+                        String[] columns = scanner.nextLine().split(" ");
+                        if (columns.length >= 4) {
+                            double latitude = Double.parseDouble(columns[0]);
+                            double longitude = Double.parseDouble(columns[1]);
+                            String name = columns[2];
+                            String description = columns[3];
+                            locations.add(new Location(latitude, longitude, name, description));
+                        }
+                    }
                 }
+            } else {
+                System.err.println("Archive: " + filePath + " not found");
             }
-        } catch (FileNotFoundException | NumberFormatException e) {
+        } catch (IOException | NumberFormatException e) {
             throw new RuntimeException("Error reading locations from file", e);
         }
         return locations;

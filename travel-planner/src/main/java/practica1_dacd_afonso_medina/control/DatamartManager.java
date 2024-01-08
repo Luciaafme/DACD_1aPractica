@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 
 public class DatamartManager {
     private final String dbpath;
-    private DbConnection dbConnection;
+    private DmConnection dmConnection;
     private Connection connection;
     private Statement statement;
     private EventModelBuilder eventStoreBuilder;
@@ -24,7 +24,7 @@ public class DatamartManager {
         this.eventStoreBuilder = eventStoreBuilder;
         try {
             new File(this.dbpath).getParentFile().mkdirs();
-            this.connection = dbConnection.connect(dbpath);
+            this.connection = dmConnection.connect(dbpath);
             this.statement = connection.createStatement();
             createTableWeather();
             createTableHotel();
@@ -73,7 +73,7 @@ public class DatamartManager {
         String insertQuery = "INSERT INTO prediction_Weather (predictionTime, zone, island, temperature, clouds, precipitation) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
-            preparedStatement.setString(1, dateFormatter(weather.getPredictionTime()));
+            preparedStatement.setString(1, dateFormatter(weather.getPredictionTs()));
             preparedStatement.setString(2, weather.getLocation().getZone());
             preparedStatement.setString(3, weather.getLocation().getIsland());
             preparedStatement.setDouble(4, weather.getTemperature());

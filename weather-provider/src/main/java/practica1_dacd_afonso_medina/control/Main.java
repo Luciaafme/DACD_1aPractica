@@ -5,7 +5,7 @@ public class Main {
 
         Timer timer = new Timer();
         long period = 6 * 60 * 60 * 1000;
-        WeatherController weatherController = new WeatherController(new OpenWeatherMapSupplier(args[0]),new JmsWeatherStore(), args[1]);
+        WeatherController weatherController = new WeatherController(new OpenWeatherMapSupplier(args[0]),new JmsWeatherStore(), "locations.tsv");
         timer.schedule(weatherController,0, period);
 
     }

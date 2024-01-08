@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 
 
-public class Interface extends JFrame {
+public class UserInterface extends JFrame {
     private WeatherCalculator weatherCalculator;
     private BookingCalculator bookingCalculator;
     private JComboBox<String> islandsComboBox;
@@ -17,7 +17,7 @@ public class Interface extends JFrame {
     private JButton confirmButton;
     private JTextArea resultTextArea;
 
-    public Interface(WeatherCalculator weatherCalculator, BookingCalculator bookingCalculator) {
+    public UserInterface(WeatherCalculator weatherCalculator, BookingCalculator bookingCalculator) {
         this.weatherCalculator = weatherCalculator;
         this.bookingCalculator = bookingCalculator;
         initialize();

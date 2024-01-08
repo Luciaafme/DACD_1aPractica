@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 public class EventModelBuilder {
     public Weather weatherBuilder(String jsonData) {
         JsonObject responseJson = new Gson().fromJson(jsonData, JsonObject.class);
-        Instant instant = Instant.from(DateTimeFormatter.ISO_INSTANT.parse(responseJson.get("predictionTime").getAsString()));
+        Instant instant = Instant.from(DateTimeFormatter.ISO_INSTANT.parse(responseJson.get("predictionTs").getAsString()));
         Location location = getLocation(responseJson.getAsJsonObject("location"));
         return new Weather(instant, location, responseJson.get("temperature").getAsDouble(),
                 responseJson.get("clouds").getAsInt(), responseJson.get("precipitation").getAsDouble());

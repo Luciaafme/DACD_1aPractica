@@ -7,6 +7,7 @@ import practica1_dacd_afonso_medina.control.exception.XoteloApiException;
 import practica1_dacd_afonso_medina.model.Booking;
 import practica1_dacd_afonso_medina.model.Hotel;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.time.*;
 import java.util.*;
 
@@ -16,19 +17,28 @@ public class XoteloApiSupplier implements AccommodationSupplier {
     public XoteloApiSupplier(String HOTEL_INFO_FILE_PATH) {
         this.HOTEL_INFO_FILE_PATH = HOTEL_INFO_FILE_PATH;
     }
-
-
     private static List<Hotel> readHotelInfoFromFile() {
         List<Hotel> hotelList = new ArrayList<>();
-        try (Scanner scanner = new Scanner(new File(HOTEL_INFO_FILE_PATH))) {
-            while (scanner.hasNextLine()) {
-                String[] columns = scanner.nextLine().split(" ");
-                System.out.println("Reading");
-                if (columns.length >= 3) hotelList.add(new Hotel(columns[0], columns[1], columns[2], columns[3]));
+        try (InputStream inputStream = Main.class.getClassLoader().getResourceAsStream(HOTEL_INFO_FILE_PATH)) {
+            if (inputStream != null) {
+                try (Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8.name())) {
+                    while (scanner.hasNextLine()) {
+                        String[] columns = scanner.nextLine().split(" ");
+                        if (columns.length >= 3) {
+                            System.out.println("Reading");
+                            hotelList.add(new Hotel(columns[0], columns[1], columns[2], columns[3]));
+                        }
+                    }
+                }
+            } else {
+                System.err.println("Archive: " + HOTEL_INFO_FILE_PATH + " not found");
             }
-        } catch (FileNotFoundException e) { throw new RuntimeException(e); }
+        } catch (IOException e) {
+            throw new RuntimeException("Error reading hotel information from file", e);
+        }
         return hotelList;
     }
+
     private static List<Booking> fetchPricesForDates(OkHttpClient client, Hotel hotel) throws XoteloApiException {
         List<Booking> listHotels = new ArrayList<>();
         LocalTime currentTime = LocalTime.now();
@@ -45,6 +55,8 @@ public class XoteloApiSupplier implements AccommodationSupplier {
         }
         return listHotels;
     }
+
+
 
     private static List<Booking> createHotelObjects(String xoteloData, Hotel hotel, String checkIn, String checkOut) {
         List<Booking> listHotels = new ArrayList<>();

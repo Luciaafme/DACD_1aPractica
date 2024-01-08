@@ -1,6 +1,6 @@
 package practica1_dacd_afonso_medina.view;
 
-import practica1_dacd_afonso_medina.control.DbConnection;
+import practica1_dacd_afonso_medina.control.DmConnection;
 import practica1_dacd_afonso_medina.control.exception.SqliteException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,12 +13,12 @@ import java.time.temporal.ChronoUnit;
 
 public class BookingCalculator {
     private Connection connection;
-    private DbConnection dbConnection;
+    private DmConnection dmConnection;
     private String dbpath;
 
     public BookingCalculator(String dbpath) throws SqliteException {
         this.dbpath = dbpath;
-        this.connection = dbConnection.connect(dbpath);
+        this.connection = dmConnection.connect(dbpath);
     }
 
     public String bookingCalculator(String checkIn, String checkOut, String island) {
@@ -78,7 +78,7 @@ public class BookingCalculator {
 
                     double totalPrice = price * nights;
 
-                    bookingResult.append(", Zone: ").append(zone)
+                    bookingResult.append("Zone: ").append(zone)
                             .append(", Hotel: ").append(hotel)
                             .append(", Platform: ").append(platform)
                             .append(", Total price for ").append(nights).append(" nights: ").append(totalPrice).append("\n");

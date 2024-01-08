@@ -48,13 +48,13 @@ public class OpenWeatherMapSupplier implements WeatherSupplier {
 
     private Weather createWeatherObject(JsonObject listItem, Location location) {
         String date = listItem.get("dt_txt").getAsString();
-        Instant predictionTime = dateFormatter(date);
+        Instant predictionTs = dateFormatter(date);
         int humidity = listItem.getAsJsonObject("main").get("humidity").getAsInt();
         double temp = listItem.getAsJsonObject("main").get("temp").getAsDouble();
         double precipitation = listItem.get("pop").getAsDouble();
         int clouds = listItem.getAsJsonObject("clouds").get("all").getAsInt();
         double windSpeed = listItem.getAsJsonObject("wind").get("speed").getAsDouble();
-        return new Weather(predictionTime, humidity, windSpeed, temp, clouds, precipitation, location);
+        return new Weather(predictionTs, humidity, windSpeed, temp, clouds, precipitation, location);
     }
 
     @Override

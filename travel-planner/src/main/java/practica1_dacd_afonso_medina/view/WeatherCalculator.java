@@ -1,6 +1,6 @@
 package practica1_dacd_afonso_medina.view;
 
-import practica1_dacd_afonso_medina.control.DbConnection;
+import practica1_dacd_afonso_medina.control.DmConnection;
 import practica1_dacd_afonso_medina.control.exception.SqliteException;
 
 import java.sql.*;
@@ -10,12 +10,12 @@ import java.util.Map;
 
 public class WeatherCalculator {
     private Connection connection;
-    private DbConnection dbConnection;
+    private DmConnection dmConnection;
     private String dbpath;
 
     public WeatherCalculator(String dbpath) throws SqliteException {
         this.dbpath = dbpath;
-        this.connection = dbConnection.connect(dbpath);
+        this.connection = dmConnection.connect(dbpath);
     }
     public String weatherCalculator(String checkIn, String checkOut, String island) {
         Map<String, Map<String, Double>> dataByZone = fetchWeatherData(checkIn, checkOut, island);

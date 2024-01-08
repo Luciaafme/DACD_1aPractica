@@ -28,7 +28,7 @@ public class JmsAccommodationStore implements AccommodationStore{
 
             for (Booking booking : bookingList) {
 
-                String bookingSerialize = serializeWeatherToJson(booking);
+                String bookingSerialize = serializeAccommodationToJson(booking);
                 TextMessage message = session.createTextMessage(bookingSerialize);
                 producer.send(message);
                 System.out.println(bookingSerialize);
@@ -39,7 +39,7 @@ public class JmsAccommodationStore implements AccommodationStore{
             throw new StoreException(e.getMessage());
         }
     }
-    public String serializeWeatherToJson(Booking weather) {
+    public String serializeAccommodationToJson(Booking weather) {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Instant.class, new JmsAccommodationStore.InstantAdapter())
                 .create();
