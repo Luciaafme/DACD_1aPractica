@@ -35,22 +35,34 @@ You should follow these steps:
 1. Install and Activate the broker ActiveMq in your system.
 2. Download the ZIP files from the latest release.
 3. Unzip the contents of each ZIP file to the location of your choice.
-4. Run the event-store-builder module:
-   >Execute the event-store-builder module from its location within your system. Use the provided image as a reference, passing the desired path as a parameter to create the "eventstore" directory. As an example, we want to create this directory on the Desktop.
+4. Run the datalake-builder module:
+   >Execute the datalake-builder module from its location within your system. Use the provided image as a reference, passing the desired path as a parameter to create the "datalake" directory. As an example, we want to create this directory on the Desktop.
 
-![image](https://github.com/Luciaafme/DACD_2aPractica/assets/145342904/7c376fc8-bfde-4a80-8f33-1f7a50b4b47f)
+![image](https://github.com/Luciaafme/DACD_Final_Project/assets/145342904/2a854033-ebd0-4cbc-b64d-4a343dce051b)
+
+5. Now, run the travel-planner module:
+   > Execute the travel- planner module from its location within your system. Use the provided image as a reference, passing the desired path as a parameter to create the database. As an example, we want to create a database called database.db on the Desktop on a directory called "jdbc".
+
+![image](https://github.com/Luciaafme/DACD_Final_Project/assets/145342904/11b97f40-e01d-4616-908b-aed43d4be07f)
 
 
+6. Continue with the accommodation-provider module (PLEASE, READ THE NEXT SECTION 'Things to take into account'):
+   
+   > Run the accommodation-provider module from its location within your system. 
 
- 
+![image](https://github.com/Luciaafme/DACD_Final_Project/assets/145342904/8549b2c1-ae29-4902-8886-bb8c0d116534)
 
-5. Next, run the weather-provider module:
+
+7. Next, run the weather-provider module:
    >Execute the weather-provider module from its location within your system, following the same approach as in the previous step. This time, pass your API key as a parameter.
 
 
 ![image](https://github.com/Luciaafme/DACD_2aPractica/assets/145342904/eefd6b10-99be-4834-a1ea-0113d9c6569e)
 
+# Things to take into account
+The Xotelo API is noticeably slow, which can occasionally lead to timeout issues. In most cases, simply waiting is sufficient to resolve this error. In very rare instances, it may be necessary to rerun the Accommodation Provider module to ensure its continuous functionality. The user interface may remain operational even in the absence of data from this API; however, it will display a message indicating that no data is currently available and encourage the user to try again. On the other hand, error messages will be displayed if attempts are made to input more days than allowed or if a reservation is made for today after 12:00:00 PM.
 
+![image](https://github.com/Luciaafme/DACD_Final_Project/assets/145342904/750a5bd7-4e87-4bdd-a784-7ff3ee3760a7)
 
 
 
@@ -156,7 +168,8 @@ On the other hand in the model layer:
 
 This module likely handles the functionality related to retrieving hotel information. It encapsulates the logic for interacting with the Xotelo API, processing the data, and providing it to a message broker (ActiveMQ). 
 
-![image](https://github.com/Luciaafme/DACD_2aPractica/assets/145342904/50fb7f22-3f21-4b88-a8f4-15ec19f84c1f)
+![image](https://github.com/Luciaafme/DACD_Final_Project/assets/145342904/2f0db0d7-8cae-40a8-b134-073161b2e5dc)
+
 
 
 In the control layer we can see these classes:
