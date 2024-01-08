@@ -201,7 +201,8 @@ Regarding the control layer we can see:
 > ### *Travel Planner Module*:
 The Travel Planner module orchestrates travel planning by integrating information about hotels and weather forecasts. 
 
-![image](https://github.com/Luciaafme/DACD_2aPractica/assets/145342904/4ecd58f1-381e-43e8-8d76-6ff8c14a76b4)
+![image](https://github.com/Luciaafme/DACD_Final_Project/assets/145342904/137823ce-acf7-4fb9-982e-73a0fb904036)
+
 
 In the control layer we can see these classes:
 
