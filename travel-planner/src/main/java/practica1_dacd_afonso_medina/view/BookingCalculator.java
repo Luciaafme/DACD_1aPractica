@@ -27,16 +27,16 @@ public class BookingCalculator {
         String sql = "SELECT island, zone, hotel_name, platform, price AS price FROM prediction_Booking WHERE check_in = ? AND island = ? GROUP BY island, zone, hotel_name, platform";
         StringBuilder bookingResult = new StringBuilder();
         boolean dataAvailable = fetchDataForBooking(sql, checkIn, checkOut, island, bookingResult);
+        if (isAfterNoonToday(checkIn, currentDateTime, noon)) {
+            return "Booking for today will be made for the next day, as it is after 12:00:00.";
+        }
+        LocalDateTime maxAllowedDateTime = calculateMaxAllowedDateTime(currentDateTime, noon);
+        if (isCheckOutAfterMaxAllowedDateTime(checkOut, maxAllowedDateTime)) {
+            return "Sorry, booking is limited to a maximum of 5 days, i.e., 4 nights from today or tomorrow (if the booking is after 12:00:00).";
+        }
+
         if (!dataAvailable) {
             return "Keep trying. Currently, there is no available data for the booking.";
-        } else {
-            if (isAfterNoonToday(checkIn, currentDateTime, noon)) {
-                return "Booking for today will be made for the next day, as it is after 12:00:00.";
-            }
-            LocalDateTime maxAllowedDateTime = calculateMaxAllowedDateTime(currentDateTime, noon);
-            if (isCheckOutAfterMaxAllowedDateTime(checkOut, maxAllowedDateTime)) {
-                return "Sorry, booking is limited to a maximum of 5 days, i.e., 4 nights from today or tomorrow (if the booking is after 12:00:00).";
-            }
         }
 
         return bookingResult.toString();

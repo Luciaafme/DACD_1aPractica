@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
         Timer timer = new Timer();
         long period = 6 * 60 * 60 * 1000;
-        AccommodationController accommodationController = new AccommodationController(new XoteloApiSupplier("idhotel.tsv"), new JmsAccommodationStore());
+        AccommodationController accommodationController = new AccommodationController(new XoteloApiSupplier("idHotel.tsv"), new JmsAccommodationStore());
         timer.schedule(accommodationController, 0, period);
     }
 }
