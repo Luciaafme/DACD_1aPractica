@@ -46,7 +46,7 @@ You should follow these steps:
 ![image](https://github.com/Luciaafme/DACD_Final_Project/assets/145342904/11b97f40-e01d-4616-908b-aed43d4be07f)
 
 
-6. Continue with the accommodation-provider module (READ THE NEXT SECTION 'Things to take into account'):
+6. Continue with the accommodation-provider module (PLEASE, READ THE NEXT SECTION 'Things to take into account'):
    
    > Run the accommodation-provider module from its location within your system. 
 
@@ -60,7 +60,7 @@ You should follow these steps:
 ![image](https://github.com/Luciaafme/DACD_2aPractica/assets/145342904/eefd6b10-99be-4834-a1ea-0113d9c6569e)
 
 # Things to take into account
-"The Xotelo API is notably slow, which may occasionally result in timeout issues. In such cases, it might be necessary to rerun the Accommodation Provider module to ensure its continued functionality. The user interface can remain operational even in the absence of data from this API; however, it will display a message indicating that there are no available data yet and encourage the user to try again. On another note, error messages will be shown if attempting to insert more days than permitted or making a reservation for today after 12:00:00."
+The Xotelo API is noticeably slow, which can occasionally lead to timeout issues. In most cases, simply waiting is sufficient to resolve this error. In very rare instances, it may be necessary to rerun the Accommodation Provider module to ensure its continuous functionality. The user interface may remain operational even in the absence of data from this API; however, it will display a message indicating that no data is currently available and encourage the user to try again. On the other hand, error messages will be displayed if attempts are made to input more days than allowed or if a reservation is made for today after 12:00:00 PM.
 
 ![image](https://github.com/Luciaafme/DACD_Final_Project/assets/145342904/750a5bd7-4e87-4bdd-a784-7ff3ee3760a7)
 
