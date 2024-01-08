@@ -210,7 +210,7 @@ In the control layer we can see these classes:
 - **DatamartManager:** Responsible for creating tables, inserting data into corresponding tables, and table deletion.
 - **DbConnection:** Establishes a connection with the database.
 - **EventModelBuilder:** Processes each event by extracting relevant data to later insert it into the datamart.
-- MessageReceiver:** This class listens to a specific topic on a message broker (ActiveMQ in this case) and processes incoming messages. 
+- **MessageReceiver:** This class listens to a specific topic on a message broker (ActiveMQ in this case) and processes incoming messages. 
 - **Main:** Serves as the entry point for the application.
 
 On the other hand in the model layer:
