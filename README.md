@@ -62,7 +62,8 @@ You should follow these steps:
 # Things to take into account
 The Xotelo API is noticeably slow, which can occasionally lead to timeout issues. In most cases, simply waiting is sufficient to resolve this error. In very rare instances, it may be necessary to rerun the Accommodation Provider module to ensure its continuous functionality. The user interface may remain operational even in the absence of data from this API; however, it will display a message indicating that no data is currently available and encourage the user to try again. On the other hand, error messages will be displayed if attempts are made to input more days than allowed or if a reservation is made for today after 12:00:00 PM.
 
-![image](https://github.com/Luciaafme/DACD_Final_Project/assets/145342904/750a5bd7-4e87-4bdd-a784-7ff3ee3760a7)
+![image](https://github.com/Luciaafme/DACD_Final_Project/assets/145342904/5f74a1c6-33b4-436c-ae6e-3b4ac8bda312)
+
 
 
 
