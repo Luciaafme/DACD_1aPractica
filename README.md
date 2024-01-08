@@ -40,20 +40,20 @@ You should follow these steps:
 
 ![image](https://github.com/Luciaafme/DACD_Final_Project/assets/145342904/2a854033-ebd0-4cbc-b64d-4a343dce051b)
 
-5. Now, run the travel-planner 
+5. Now, run the travel-planner module:
    > Execute the travel- planner module from its location within your system. Use the provided image as a reference, passing the desired path as a parameter to create the database. As an example, we want to create a database called database.db on the Desktop on a directory called "jdbc".
 
 ![image](https://github.com/Luciaafme/DACD_Final_Project/assets/145342904/11b97f40-e01d-4616-908b-aed43d4be07f)
 
 
-7. Continue with the accommodation-provider module: (READ THE NEXT SECTION 'Things to take into account')
+6. Continue with the accommodation-provider module (READ THE NEXT SECTION 'Things to take into account'):
    
    > Run the accommodation-provider module from its location within your system. 
 
 ![image](https://github.com/Luciaafme/DACD_Final_Project/assets/145342904/8549b2c1-ae29-4902-8886-bb8c0d116534)
 
 
-8. Next, run the weather-provider module:
+7. Next, run the weather-provider module:
    >Execute the weather-provider module from its location within your system, following the same approach as in the previous step. This time, pass your API key as a parameter.
 
 
